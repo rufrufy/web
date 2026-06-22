@@ -90,14 +90,21 @@ export default function HomePage() {
       )}
 
       {modal.type === "absen" && !homeData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="card p-8 text-center">
+        <div
+          className="modal-backdrop animate-fade-in fixed inset-0 z-[60] flex items-end justify-center sm:items-center"
+          role="dialog"
+          aria-modal="true"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) setModal({ type: "none" });
+          }}
+        >
+          <div className="animate-slide-up card w-full max-w-md rounded-t-2xl p-8 text-center sm:rounded-2xl">
             <p className="text-sm text-gray-500">
               Data home belum dimuat. Coba refresh.
             </p>
             <button
               onClick={() => setModal({ type: "none" })}
-              className="btn-outline mt-4"
+              className="btn-outline mt-4 w-full"
             >
               Tutup
             </button>

@@ -1,0 +1,1062 @@
+{
+  "version": 1,
+  "updatedAt": "2026-06-22T15:59:16.105Z",
+  "activeTasks": [],
+  "completedSummaries": [],
+  "blockers": [],
+  "verificationEvidence": [
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx next lint --max-warnings=0 2>&1 | Out-String",
+      "status": "unknown",
+      "summary": "npx next lint --max-warnings=0 2>&1 | Out-String -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx next lint --max-warnings=0 2>&1 | Out-String",
+      "status": "unknown",
+      "summary": "npx next lint --max-warnings=0 2>&1 | Out-String -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx tsc --noEmit",
+      "status": "unknown",
+      "summary": "npx tsc --noEmit -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npx next lint --max-warnings=0 2>&1 | Out-String",
+      "status": "unknown",
+      "summary": "npx next lint --max-warnings=0 2>&1 | Out-String -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "npm run build 2>&1 | Out-String",
+      "status": "unknown",
+      "summary": "npm run build 2>&1 | Out-String -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    }
+  ],
+  "retryHistory": [],
+  "traceEvents": [
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to webfetch output",
+      "at": "2026-06-22T15:08:56.998Z",
+      "metadata": {
+        "tool": "webfetch",
+        "originalChars": 12396,
+        "compressedChars": 7608,
+        "estimatedTokensSaved": 1197
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to webfetch output",
+      "at": "2026-06-22T15:09:06.365Z",
+      "metadata": {
+        "tool": "webfetch",
+        "originalChars": 712,
+        "compressedChars": 735,
+        "estimatedTokensSaved": 0
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to bash output",
+      "at": "2026-06-22T15:14:35.563Z",
+      "metadata": {
+        "tool": "bash",
+        "originalChars": 118,
+        "compressedChars": 112,
+        "estimatedTokensSaved": 2
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to bash output",
+      "at": "2026-06-22T15:39:51.754Z",
+      "metadata": {
+        "tool": "bash",
+        "originalChars": 85,
+        "compressedChars": 84,
+        "estimatedTokensSaved": 1
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "npx tsc --noEmit -> unknown",
+      "at": "2026-06-22T15:51:21.409Z",
+      "metadata": {
+        "command": "npx tsc --noEmit"
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "npx next lint --max-warnings=0 2>&1 | Out-String -> unknown",
+      "at": "2026-06-22T15:51:35.422Z",
+      "metadata": {
+        "command": "npx next lint --max-warnings=0 2>&1 | Out-String"
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to bash output",
+      "at": "2026-06-22T15:51:35.427Z",
+      "metadata": {
+        "tool": "bash",
+        "originalChars": 300,
+        "compressedChars": 293,
+        "estimatedTokensSaved": 1
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "npm run build 2>&1 | Out-String -> unknown",
+      "at": "2026-06-22T15:52:19.515Z",
+      "metadata": {
+        "command": "npm run build 2>&1 | Out-String"
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to bash output",
+      "at": "2026-06-22T15:52:19.520Z",
+      "metadata": {
+        "tool": "bash",
+        "originalChars": 1147,
+        "compressedChars": 1082,
+        "estimatedTokensSaved": 16
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to bash output",
+      "at": "2026-06-22T15:52:41.212Z",
+      "metadata": {
+        "tool": "bash",
+        "originalChars": 208,
+        "compressedChars": 206,
+        "estimatedTokensSaved": 0
+      }
+    }
+  ],
+  "changedFiles": [
+    "C:\\Users\\Maruf\\Nextjs\\web\\Dockerfile",
+    "C:\\Users\\Maruf\\Nextjs\\web\\DEPLOY.md",
+    "C:\\Users\\Maruf\\Nextjs\\web\\deploy.sh",
+    "C:\\Users\\Maruf\\Nextjs\\web\\nginx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\nginx\\web.bkpp.dev.conf",
+    "C:\\Users\\Maruf\\Nextjs\\web",
+    "C:\\Users\\Maruf\\Nextjs\\web\\package.json",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\AppShell.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\AbsenModal.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\app\\home\\page.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\Icons.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\app\\login\\page.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\app\\layout.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\app\\globals.css",
+    "C:\\Users\\Maruf\\Nextjs\\web\\tailwind.config.js",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\Home.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\Logo.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\Notifikasi.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\ModalShell.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\Kegiatan.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src\\components\\TrainFaceModal.tsx",
+    "C:\\Users\\Maruf\\Nextjs\\web\\src"
+  ],
+  "workflowRuns": [],
+  "wisdom": [],
+  "taskLearnings": [],
+  "failureMemories": [],
+  "contextBudgetSummary": {
+    "originalChars": 22036480,
+    "compressedChars": 21444352,
+    "estimatedTokensSaved": 98304,
+    "estimatedSavingsPercent": 3,
+    "tasks": 67712,
+    "byTool": {
+      "webfetch": {
+        "originalChars": 0,
+        "compressedChars": 0,
+        "estimatedTokensSaved": 0,
+        "tasks": 0
+      },
+      "bash": {
+        "originalChars": 22036480,
+        "compressedChars": 21444352,
+        "estimatedTokensSaved": 98304,
+        "tasks": 67712
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npx tsc --noEmit",
+    "status": "unknown",
+    "summary": "npx tsc --noEmit -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782143481394-1",
+    "timestamp": "2026-06-22T15:51:21.394Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npx next lint --max-warnings=0 2>&1 | Out-String",
+    "status": "unknown",
+    "summary": "npx next lint --max-warnings=0 2>&1 | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782143495402-2",
+    "timestamp": "2026-06-22T15:51:35.402Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npm run build 2>&1 | Out-String",
+    "status": "unknown",
+    "summary": "npm run build 2>&1 | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782143539497-3",
+    "timestamp": "2026-06-22T15:52:19.497Z"
+  }
+]

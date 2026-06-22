@@ -10,6 +10,8 @@ import {
   QrIcon,
   ArrowLeftIcon,
   CheckIcon,
+  AlertCircleIcon,
+  MapPinIcon,
 } from "@/components/Icons";
 
 interface AbsenModalProps {
@@ -19,7 +21,13 @@ interface AbsenModalProps {
   onClose: () => void;
 }
 
-type Step = "select" | "camera" | "scan" | "submitting" | "success" | "error";
+type Step =
+  | "select"
+  | "camera"
+  | "scan"
+  | "submitting"
+  | "success"
+  | "error";
 
 export function AbsenModal({
   mode,
@@ -57,6 +65,25 @@ export function AbsenModal({
       setStep("scan");
     }
   }, [metodeFace, metodeQr]);
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    const prevPos = document.body.style.position;
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    return () => {
+      document.body.style.overflow = prev;
+      document.body.style.position = prevPos;
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && step !== "submitting") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [step, onClose]);
 
   const getLocation = useCallback(async () => {
     setLocationStatus("loading");
@@ -97,14 +124,15 @@ export function AbsenModal({
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "user" },
+        audio: false,
       });
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+        await videoRef.current.play().catch(() => undefined);
       }
     } catch {
-      setErrorMsg("Tidak dapat mengakses kamera");
+      setErrorMsg("Tidak dapat mengakses kamera. Periksa izin kamera browser.");
       setStep("error");
     }
   }, []);
@@ -124,12 +152,12 @@ export function AbsenModal({
     if (!videoRef.current || !canvasRef.current) return;
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
+    canvas.width = video.videoWidth || 720;
+    canvas.height = video.videoHeight || 960;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
     setPhoto(dataUrl);
     stopCamera();
   };
@@ -173,10 +201,8 @@ export function AbsenModal({
       jam_absen: jamAbsen,
       jam_absen_hadir: jamKerja?.jam_masuk || "08:00:00",
       jam_absen_pulang: jamKerja?.jam_pulang || "16:00:00",
-      android_id: navigator.userAgent,
-      lokasi: location
-        ? `${location.lat},${location.lng}`
-        : "0,0",
+      ancodebuddy_id: navigator.userAgent,
+      lokasi: location ? `${location.lat},${location.lng}` : "0,0",
       kantor: matchedLokasi,
       laporan_kegiatan: "",
       app_version: "11",
@@ -239,17 +265,39 @@ export function AbsenModal({
         ? "Absen Masuk"
         : "Absen Pulang";
 
+  const showPhotoReview =
+    photo && step !== "submitting" && step !== "success" && step !== "error";
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="card w-full max-w-md overflow-hidden">
-        <div className="flex items-center justify-between bg-primary px-4 py-3 text-white">
-          <button onClick={onClose} className="flex items-center gap-1 text-sm">
-            <ArrowLeftIcon />
+    <div
+      className="modal-backdrop animate-fade-in fixed inset-0 z-[60] flex items-end justify-center sm:items-center"
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget && step !== "submitting") onClose();
+      }}
+    >
+      <div
+        className="animate-slide-up card flex max-h-[94dvh] w-full flex-col overflow-hidden rounded-t-2xl sm:max-w-md sm:rounded-2xl"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      >
+        <div className="safe-top flex shrink-0 items-center justify-between bg-primary px-4 py-3 text-white">
+          <button
+            onClick={onClose}
+            disabled={step === "submitting"}
+            className="flex items-center gap-1.5 text-sm font-medium hover:bg-white/10 active:scale-95 disabled:opacity-50"
+            aria-label="Kembali"
+          >
+            <ArrowLeftIcon size={18} />
             {title}
           </button>
+          <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide">
+            {jenis}
+          </span>
         </div>
 
-        <div className="p-4">
+        <div className="no-scrollbar flex-1 overflow-y-auto overscroll-contain p-4">
           {step === "select" && (
             <div className="space-y-4">
               <div>
@@ -259,10 +307,10 @@ export function AbsenModal({
                     <button
                       key={j}
                       onClick={() => setJenisAbsen(j)}
-                      className={`flex-1 rounded-lg py-2 text-sm font-medium ${
+                      className={`flex-1 rounded-lg py-2 text-sm font-medium transition active:scale-95 ${
                         jenisAbsen === j
-                          ? "bg-primary text-white"
-                          : "bg-gray-100 text-gray-600"
+                          ? "bg-primary text-white shadow-sm"
+                          : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                       }`}
                     >
                       {j}
@@ -287,7 +335,7 @@ export function AbsenModal({
                     }}
                     className="btn-primary"
                   >
-                    <CameraIcon />
+                    <CameraIcon size={20} />
                     Face
                   </button>
                 )}
@@ -299,7 +347,7 @@ export function AbsenModal({
                     }}
                     className="btn-outline"
                   >
-                    <QrIcon />
+                    <QrIcon size={20} />
                     Scan QR
                   </button>
                 )}
@@ -309,16 +357,20 @@ export function AbsenModal({
 
           {step === "camera" && (
             <div className="space-y-3">
-              <div className="relative aspect-video overflow-hidden rounded-lg bg-black">
+              <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-2xl bg-black shadow-lg">
                 <video
                   ref={videoRef}
-                  className="h-full w-full object-cover"
+                  className="h-full w-full -scale-x-100 object-cover"
                   playsInline
                   muted
+                  autoPlay
                 />
                 <canvas ref={canvasRef} className="hidden" />
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                  <div className="h-48 w-48 rounded-full border-4 border-white/50" />
+                  <div className="h-44 w-36 rounded-[50%] border-4 border-white/70 shadow-[0_0_0_2000px_rgba(0,0,0,0.25)]" />
+                </div>
+                <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black/50 px-3 py-1 text-xs text-white">
+                  Posisikan wajah di dalam lingkaran
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -332,20 +384,21 @@ export function AbsenModal({
                   Batal
                 </button>
                 <button onClick={capturePhoto} className="btn-primary">
+                  <CameraIcon size={18} />
                   Ambil Foto
                 </button>
               </div>
             </div>
           )}
 
-          {photo && step !== "submitting" && step !== "success" && step !== "error" && (
+          {showPhotoReview && (
             <div className="space-y-3">
-              <div className="overflow-hidden rounded-lg">
+              <div className="mx-auto max-w-xs overflow-hidden rounded-2xl bg-black shadow-lg">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={photo}
                   alt="Foto absen"
-                  className="w-full"
+                  className="aspect-[3/4] w-full object-cover"
                 />
               </div>
               <LocationStatus
@@ -364,7 +417,7 @@ export function AbsenModal({
                   Ulang
                 </button>
                 <button onClick={submitFace} className="btn-success">
-                  <CheckIcon />
+                  <CheckIcon size={18} />
                   Kirim
                 </button>
               </div>
@@ -402,11 +455,11 @@ export function AbsenModal({
           {step === "success" && (
             <div className="py-8 text-center">
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-success">
-                <CheckIcon />
+                <CheckIcon size={32} />
               </div>
               <p className="font-semibold text-gray-900">Berhasil!</p>
               <p className="mt-1 text-sm text-gray-500">{successMsg}</p>
-              <button onClick={onClose} className="btn-primary mt-4">
+              <button onClick={onClose} className="btn-primary mt-4 w-full">
                 Selesai
               </button>
             </div>
@@ -414,14 +467,14 @@ export function AbsenModal({
 
           {step === "error" && (
             <div className="py-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-danger text-2xl">
-                !
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-50 text-danger">
+                <AlertCircleIcon size={32} />
               </div>
               <p className="font-semibold text-gray-900">Gagal</p>
               <p className="mt-1 text-sm text-gray-500">{errorMsg}</p>
               <button
                 onClick={() => setStep("select")}
-                className="btn-outline mt-4"
+                className="btn-outline mt-4 w-full"
               >
                 Kembali
               </button>
@@ -444,22 +497,25 @@ function LocationStatus({
 }) {
   if (status === "loading")
     return (
-      <div className="rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-700">
+      <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-3 py-2 text-sm text-blue-700">
+        <MapPinIcon size={16} className="animate-pulse" />
         Mendeteksi lokasi...
       </div>
     );
   if (status === "error")
     return (
-      <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+      <div className="flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">
+        <AlertCircleIcon size={16} />
         Lokasi tidak terdeteksi.{" "}
-        <button onClick={onRetry} className="underline">
+        <button onClick={onRetry} className="underline font-medium">
           Coba lagi
         </button>
       </div>
     );
   if (status === "ok")
     return (
-      <div className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">
+      <div className="flex items-center gap-2 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">
+        <MapPinIcon size={16} />
         Lokasi: {matched || "Tidak di kantor"}
       </div>
     );

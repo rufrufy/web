@@ -5,7 +5,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
 import type { NotifikasiListResponse } from "@/types";
 import { Loading, ErrorState, EmptyState } from "@/components/Feedback";
-import { BellIcon } from "@/components/Icons";
+import { BellIcon, CheckIcon } from "@/components/Icons";
+import { ModalShell } from "@/components/ModalShell";
 
 export function Notifikasi({ onClose }: { onClose: () => void }) {
   const { token, user } = useAuth();
@@ -54,65 +55,55 @@ export function Notifikasi({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="card flex max-h-[80vh] w-full max-w-md flex-col overflow-hidden">
-        <div className="flex items-center justify-between bg-primary px-4 py-3 text-white">
-          <div className="flex items-center gap-2">
-            <BellIcon />
-            <span className="font-semibold">Notifikasi</span>
-          </div>
-          <button
-            onClick={onClose}
-            className="rounded-lg px-3 py-1 text-sm hover:bg-white/10"
-          >
-            Tutup
-          </button>
+    <ModalShell title="Notifikasi" onClose={onClose}>
+      {loading && (
+        <div className="p-6">
+          <Loading message="Memuat notifikasi..." />
         </div>
-
-        <div className="flex-1 overflow-y-auto">
-          {loading && <Loading message="Memuat notifikasi..." />}
-          {error && <ErrorState message={error} onRetry={fetch} />}
-          {!loading && !error && data && (
-            <>
-              {data.data.length === 0 ? (
-                <EmptyState message="Tidak ada notifikasi" />
-              ) : (
-                <div className="divide-y divide-gray-100">
-                  {data.data.map((n) => (
-                    <div
-                      key={n.id}
-                      className={`p-4 ${!n.read_at ? "bg-blue-50/50" : ""}`}
-                    >
-                      <div className="flex items-start justify-between gap-2">
-                        <div className="flex-1">
-                          <p className="text-sm font-semibold text-gray-900">
-                            {n.title}
-                          </p>
-                          <p className="mt-1 text-sm text-gray-600">
-                            {n.body}
-                          </p>
-                          <p className="mt-1 text-xs text-gray-400">
-                            {n.sent_at}
-                          </p>
-                        </div>
-                        {!n.read_at && (
-                          <button
-                            onClick={() => handleRead(n.id)}
-                            disabled={readingId === n.id}
-                            className="rounded-lg bg-blue-100 px-3 py-1 text-xs font-medium text-primary hover:bg-blue-200 disabled:opacity-50"
-                          >
-                            {readingId === n.id ? "..." : "Tandai dibaca"}
-                          </button>
-                        )}
-                      </div>
+      )}
+      {error && (
+        <div className="p-6">
+          <ErrorState message={error} onRetry={fetch} />
+        </div>
+      )}
+      {!loading && !error && data && (
+        <>
+          {data.data.length === 0 ? (
+            <div className="p-8">
+              <EmptyState message="Tidak ada notifikasi" />
+            </div>
+          ) : (
+            <div className="divide-y divide-gray-100">
+              {data.data.map((n) => (
+                <div
+                  key={n.id}
+                  className={`p-4 ${!n.read_at ? "bg-blue-50/50" : ""}`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-gray-900">
+                        {n.title}
+                      </p>
+                      <p className="mt-1 text-sm text-gray-600">{n.body}</p>
+                      <p className="mt-1 text-xs text-gray-400">{n.sent_at}</p>
                     </div>
-                  ))}
+                    {!n.read_at && (
+                      <button
+                        onClick={() => handleRead(n.id)}
+                        disabled={readingId === n.id}
+                        className="inline-flex items-center gap-1 rounded-lg bg-blue-100 px-3 py-1 text-xs font-medium text-primary hover:bg-blue-200 active:scale-95 disabled:opacity-50"
+                      >
+                        <CheckIcon size={12} />
+                        {readingId === n.id ? "..." : "Dibaca"}
+                      </button>
+                    )}
+                  </div>
                 </div>
-              )}
-            </>
+              ))}
+            </div>
           )}
-        </div>
-      </div>
-    </div>
+        </>
+      )}
+    </ModalShell>
   );
 }

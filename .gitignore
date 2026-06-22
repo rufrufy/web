@@ -6,3 +6,6 @@ build/
 .env
 .env.local
 .DS_Store
+.omc/*
+.opencode-jcert/*
+.opencode-context.md

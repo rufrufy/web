@@ -6,6 +6,7 @@ import { api } from "@/lib/api";
 import type { KegiatanListResponse } from "@/types";
 import { Loading, ErrorState, EmptyState } from "@/components/Feedback";
 import { PlusIcon, ArrowLeftIcon } from "@/components/Icons";
+import { ModalShell } from "@/components/ModalShell";
 
 export function Kegiatan({ onClose }: { onClose: () => void }) {
   const { token, user } = useAuth();
@@ -33,51 +34,54 @@ export function Kegiatan({ onClose }: { onClose: () => void }) {
   }, [fetch]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="card flex max-h-[80vh] w-full max-w-md flex-col overflow-hidden">
-        <div className="flex items-center justify-between bg-primary px-4 py-3 text-white">
-          <div className="flex items-center gap-2">
-            <button onClick={onClose} className="flex items-center gap-1">
-              <ArrowLeftIcon />
-            </button>
-            <span className="font-semibold">Kegiatan</span>
-          </div>
+    <>
+      <ModalShell
+        title="Kegiatan"
+        onClose={onClose}
+        footer={
           <button
             onClick={() => setShowAdd(true)}
-            className="rounded-lg px-3 py-1 text-sm hover:bg-white/10"
+            className="btn-primary w-full"
           >
-            <PlusIcon />
+            <PlusIcon size={18} />
+            Tambah Kegiatan
           </button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto">
-          {loading && <Loading message="Memuat kegiatan..." />}
-          {error && <ErrorState message={error} onRetry={fetch} />}
-          {!loading && !error && data && (
-            <>
-              {data.data.length === 0 ? (
+        }
+      >
+        {loading && (
+          <div className="p-6">
+            <Loading message="Memuat kegiatan..." />
+          </div>
+        )}
+        {error && (
+          <div className="p-6">
+            <ErrorState message={error} onRetry={fetch} />
+          </div>
+        )}
+        {!loading && !error && data && (
+          <>
+            {data.data.length === 0 ? (
+              <div className="p-8">
                 <EmptyState message="Belum ada kegiatan" />
-              ) : (
-                <div className="divide-y divide-gray-100">
-                  {data.data.map((k) => (
-                    <div key={k.id} className="p-4">
-                      <p className="font-semibold text-gray-900">
-                        {k.nama_kegiatan}
-                      </p>
-                      <p className="mt-1 text-sm text-gray-500">
-                        {k.tempat}
-                      </p>
-                      <p className="text-xs text-gray-400">
-                        {k.tanggal} • {k.jam}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </div>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100">
+                {data.data.map((k) => (
+                  <div key={k.id} className="p-4">
+                    <p className="font-semibold text-gray-900">
+                      {k.nama_kegiatan}
+                    </p>
+                    <p className="mt-1 text-sm text-gray-500">{k.tempat}</p>
+                    <p className="text-xs text-gray-400">
+                      {k.tanggal} • {k.jam}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </ModalShell>
 
       {showAdd && token && user && (
         <AddKegiatan
@@ -91,7 +95,7 @@ export function Kegiatan({ onClose }: { onClose: () => void }) {
           }}
         />
       )}
-    </div>
+    </>
   );
 }
 
@@ -153,80 +157,67 @@ function AddKegiatan({
   };
 
   return (
-    <div
-      className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 p-4"
-      onClick={onClose}
-    >
-      <div
-        className="card w-full max-w-md p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h3 className="mb-4 text-lg font-bold">Tambah Kegiatan</h3>
-        <form onSubmit={handleSubmit} className="space-y-4">
+    <ModalShell title="Tambah Kegiatan" onClose={onClose} closeable={!submitting}>
+      <form onSubmit={handleSubmit} className="space-y-4 p-4">
+        <div>
+          <label className="label">Nama Kegiatan</label>
+          <input
+            className="input"
+            value={namaKegiatan}
+            onChange={(e) => setNamaKegiatan(e.target.value)}
+            disabled={submitting}
+          />
+        </div>
+        <div>
+          <label className="label">Tempat</label>
+          <input
+            className="input"
+            value={tempat}
+            onChange={(e) => setTempat(e.target.value)}
+            disabled={submitting}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="label">Nama Kegiatan</label>
+            <label className="label">Tanggal</label>
             <input
+              type="date"
               className="input"
-              value={namaKegiatan}
-              onChange={(e) => setNamaKegiatan(e.target.value)}
+              value={tanggal}
+              onChange={(e) => setTanggal(e.target.value)}
               disabled={submitting}
             />
           </div>
           <div>
-            <label className="label">Tempat</label>
+            <label className="label">Jam</label>
             <input
+              type="time"
               className="input"
-              value={tempat}
-              onChange={(e) => setTempat(e.target.value)}
+              value={jam}
+              onChange={(e) => setJam(e.target.value)}
               disabled={submitting}
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="label">Tanggal</label>
-              <input
-                type="date"
-                className="input"
-                value={tanggal}
-                onChange={(e) => setTanggal(e.target.value)}
-                disabled={submitting}
-              />
-            </div>
-            <div>
-              <label className="label">Jam</label>
-              <input
-                type="time"
-                className="input"
-                value={jam}
-                onChange={(e) => setJam(e.target.value)}
-                disabled={submitting}
-              />
-            </div>
+        </div>
+        {error && (
+          <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {error}
           </div>
-          {error && (
-            <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
-              {error}
-            </div>
-          )}
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="btn-outline"
-              disabled={submitting}
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              className="btn-primary"
-              disabled={submitting}
-            >
-              {submitting ? "Menyimpan..." : "Simpan"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+        )}
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            onClick={onClose}
+            className="btn-outline"
+            disabled={submitting}
+          >
+            Batal
+          </button>
+          <button type="submit" className="btn-primary" disabled={submitting}>
+            {submitting ? "Menyimpan..." : "Simpan"}
+          </button>
+        </div>
+      </form>
+    </ModalShell>
   );
 }

@@ -10,6 +10,7 @@ import {
   ProfilIcon,
   LogoutIcon,
 } from "@/components/Icons";
+import { LogoSemarang } from "@/components/Logo";
 
 type NavKey = "home" | "riwayat" | "laporan" | "profil";
 
@@ -20,11 +21,13 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { key: "home", label: "Beranda", icon: <HomeIcon /> },
-  { key: "riwayat", label: "Riwayat", icon: <RiwayatIcon /> },
-  { key: "laporan", label: "Laporan", icon: <LaporanIcon /> },
-  { key: "profil", label: "Profil", icon: <ProfilIcon /> },
+  { key: "home", label: "Beranda", icon: <HomeIcon size={22} /> },
+  { key: "riwayat", label: "Riwayat", icon: <RiwayatIcon size={22} /> },
+  { key: "laporan", label: "Laporan", icon: <LaporanIcon size={22} /> },
+  { key: "profil", label: "Profil", icon: <ProfilIcon size={22} /> },
 ];
+
+export const NAV_BAR_HEIGHT = 64;
 
 export function AppShell({
   active,
@@ -54,42 +57,63 @@ export function AppShell({
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col bg-gray-100">
-      <header className="flex items-center justify-between bg-primary px-4 py-3 text-white">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-sm font-bold">
-            S
-          </div>
-          <span className="font-semibold">SADEWA</span>
-        </div>
+    <div className="relative mx-auto flex min-h-[100dvh] w-full max-w-2xl flex-col bg-gray-100 shadow-sm">
+      <header className="safe-top sticky top-0 z-40 flex items-center justify-between bg-primary px-4 py-3 text-white shadow-sm">
+        <LogoSemarang size={36} />
         <button
           onClick={handleLogout}
           disabled={loggingOut}
-          className="flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm hover:bg-white/10 disabled:opacity-50"
+          className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium hover:bg-white/10 active:scale-95 disabled:opacity-50"
+          aria-label="Keluar"
         >
-          <LogoutIcon />
-          {loggingOut ? "..." : "Keluar"}
+          <LogoutIcon size={18} />
+          <span className="hidden xs:inline sm:inline">
+            {loggingOut ? "..." : "Keluar"}
+          </span>
         </button>
       </header>
 
-      <main className="flex-1 overflow-y-auto pb-20">{children}</main>
+      <main
+        className="flex-1 overflow-y-auto"
+        style={{ paddingBottom: `calc(${NAV_BAR_HEIGHT}px + env(safe-area-inset-bottom, 0px) + 8px)` }}
+      >
+        {children}
+      </main>
 
-      <nav className="fixed bottom-0 left-1/2 z-50 w-full max-w-2xl border-t border-gray-200 bg-white">
-        <div className="flex">
-          {NAV_ITEMS.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => onNavigate(item.key)}
-              className={`flex flex-1 flex-col items-center gap-1 py-3 transition ${
-                active === item.key
-                  ? "text-primary"
-                  : "text-gray-400 hover:text-gray-600"
-              }`}
-            >
-              {item.icon}
-              <span className="text-xs font-medium">{item.label}</span>
-            </button>
-          ))}
+      <nav
+        className="fixed bottom-0 left-1/2 z-50 w-full max-w-2xl -translate-x-1/2 border-t border-gray-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.04)]"
+        style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+        aria-label="Navigasi utama"
+      >
+        <div
+          className="flex"
+          style={{ height: `${NAV_BAR_HEIGHT}px` }}
+        >
+          {NAV_ITEMS.map((item) => {
+            const isActive = active === item.key;
+            return (
+              <button
+                key={item.key}
+                onClick={() => onNavigate(item.key)}
+                aria-current={isActive ? "page" : undefined}
+                className={`relative flex flex-1 flex-col items-center justify-center gap-1 transition-colors ${
+                  isActive
+                    ? "text-primary"
+                    : "text-gray-400 hover:text-gray-600"
+                }`}
+              >
+                {isActive && (
+                  <span className="absolute top-0 h-0.5 w-10 rounded-full bg-primary" />
+                )}
+                <span className={isActive ? "scale-110 transition-transform" : "transition-transform"}>
+                  {item.icon}
+                </span>
+                <span className="text-[11px] font-medium leading-none">
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </nav>
     </div>

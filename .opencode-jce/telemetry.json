@@ -1,0 +1,631 @@
+[
+  {
+    "kind": "routing_decision",
+    "name": "release",
+    "metadata": {
+      "intent": "release",
+      "selectedSkills": [
+        "release-engineering",
+        "verification-discipline",
+        "devops"
+      ],
+      "suppressedSkills": [],
+      "confidence": 35
+    },
+    "at": "2026-06-22T14:50:27.343Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "release-engineering",
+    "metadata": {
+      "skill": "release-engineering",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:50:27.360Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "verification-discipline",
+    "metadata": {
+      "skill": "verification-discipline",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:50:27.376Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "devops",
+    "metadata": {
+      "skill": "devops",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:50:27.394Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T14:50:27.411Z"
+  },
+  {
+    "kind": "skill_final_used",
+    "name": "release-engineering",
+    "metadata": {
+      "skill": "release-engineering",
+      "source": "system_injection"
+    },
+    "at": "2026-06-22T14:50:27.627Z"
+  },
+  {
+    "kind": "skill_final_used",
+    "name": "verification-discipline",
+    "metadata": {
+      "skill": "verification-discipline",
+      "source": "system_injection"
+    },
+    "at": "2026-06-22T14:50:27.645Z"
+  },
+  {
+    "kind": "skill_final_used",
+    "name": "devops",
+    "metadata": {
+      "skill": "devops",
+      "source": "system_injection"
+    },
+    "at": "2026-06-22T14:50:27.662Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "release",
+    "metadata": {
+      "intent": "release",
+      "selectedSkills": [
+        "release-engineering",
+        "verification-discipline",
+        "devops"
+      ],
+      "suppressedSkills": [],
+      "confidence": 35
+    },
+    "at": "2026-06-22T14:53:12.829Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "release-engineering",
+    "metadata": {
+      "skill": "release-engineering",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:53:12.863Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "verification-discipline",
+    "metadata": {
+      "skill": "verification-discipline",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:53:12.893Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "devops",
+    "metadata": {
+      "skill": "devops",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:53:12.921Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T14:53:12.949Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "release",
+    "metadata": {
+      "intent": "release",
+      "selectedSkills": [
+        "release-engineering",
+        "verification-discipline",
+        "devops"
+      ],
+      "suppressedSkills": [],
+      "confidence": 35
+    },
+    "at": "2026-06-22T14:54:12.170Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "release-engineering",
+    "metadata": {
+      "skill": "release-engineering",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:54:12.188Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "verification-discipline",
+    "metadata": {
+      "skill": "verification-discipline",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:54:12.204Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "devops",
+    "metadata": {
+      "skill": "devops",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:54:12.223Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T14:54:12.242Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "release",
+    "metadata": {
+      "intent": "release",
+      "selectedSkills": [
+        "release-engineering",
+        "verification-discipline",
+        "devops"
+      ],
+      "suppressedSkills": [],
+      "confidence": 35
+    },
+    "at": "2026-06-22T14:54:44.612Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "release-engineering",
+    "metadata": {
+      "skill": "release-engineering",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:54:44.630Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "verification-discipline",
+    "metadata": {
+      "skill": "verification-discipline",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:54:44.647Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "devops",
+    "metadata": {
+      "skill": "devops",
+      "intent": "release"
+    },
+    "at": "2026-06-22T14:54:44.665Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T14:54:44.683Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "release",
+    "metadata": {
+      "intent": "release",
+      "selectedSkills": [
+        "release-engineering",
+        "verification-discipline",
+        "devops"
+      ],
+      "suppressedSkills": [],
+      "confidence": 35
+    },
+    "at": "2026-06-22T15:05:30.444Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "release-engineering",
+    "metadata": {
+      "skill": "release-engineering",
+      "intent": "release"
+    },
+    "at": "2026-06-22T15:05:30.464Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "verification-discipline",
+    "metadata": {
+      "skill": "verification-discipline",
+      "intent": "release"
+    },
+    "at": "2026-06-22T15:05:30.481Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "devops",
+    "metadata": {
+      "skill": "devops",
+      "intent": "release"
+    },
+    "at": "2026-06-22T15:05:30.499Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T15:05:30.515Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "general",
+    "metadata": {
+      "intent": "general",
+      "selectedSkills": [
+        "software-engineering"
+      ],
+      "suppressedSkills": [],
+      "confidence": 20
+    },
+    "at": "2026-06-22T15:07:00.945Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "software-engineering",
+    "metadata": {
+      "skill": "software-engineering",
+      "intent": "general"
+    },
+    "at": "2026-06-22T15:07:00.964Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T15:07:00.982Z"
+  },
+  {
+    "kind": "skill_final_used",
+    "name": "software-engineering",
+    "metadata": {
+      "skill": "software-engineering",
+      "source": "system_injection"
+    },
+    "at": "2026-06-22T15:07:02.074Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "feature",
+    "metadata": {
+      "intent": "feature",
+      "selectedSkills": [
+        "software-engineering",
+        "codebase-intelligence"
+      ],
+      "suppressedSkills": [],
+      "confidence": 97
+    },
+    "at": "2026-06-22T15:08:47.383Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "software-engineering",
+    "metadata": {
+      "skill": "software-engineering",
+      "intent": "feature"
+    },
+    "at": "2026-06-22T15:08:47.402Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "codebase-intelligence",
+    "metadata": {
+      "skill": "codebase-intelligence",
+      "intent": "feature"
+    },
+    "at": "2026-06-22T15:08:47.422Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T15:08:47.441Z"
+  },
+  {
+    "kind": "skill_final_used",
+    "name": "codebase-intelligence",
+    "metadata": {
+      "skill": "codebase-intelligence",
+      "source": "system_injection"
+    },
+    "at": "2026-06-22T15:08:48.521Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "general",
+    "metadata": {
+      "intent": "general",
+      "selectedSkills": [
+        "software-engineering"
+      ],
+      "suppressedSkills": [],
+      "confidence": 20
+    },
+    "at": "2026-06-22T15:11:22.525Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "software-engineering",
+    "metadata": {
+      "skill": "software-engineering",
+      "intent": "general"
+    },
+    "at": "2026-06-22T15:11:22.562Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": true,
+      "confidence": 0.85,
+      "reason": "direct action instruction",
+      "signals": [
+        "action_verb"
+      ]
+    },
+    "at": "2026-06-22T15:11:22.584Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "release",
+    "metadata": {
+      "intent": "release",
+      "selectedSkills": [
+        "release-engineering",
+        "verification-discipline",
+        "devops"
+      ],
+      "suppressedSkills": [],
+      "confidence": 35
+    },
+    "at": "2026-06-22T15:14:20.359Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "release-engineering",
+    "metadata": {
+      "skill": "release-engineering",
+      "intent": "release"
+    },
+    "at": "2026-06-22T15:14:20.377Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "verification-discipline",
+    "metadata": {
+      "skill": "verification-discipline",
+      "intent": "release"
+    },
+    "at": "2026-06-22T15:14:20.398Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "devops",
+    "metadata": {
+      "skill": "devops",
+      "intent": "release"
+    },
+    "at": "2026-06-22T15:14:20.418Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": false,
+      "confidence": 0.1,
+      "reason": "no concrete action verb",
+      "signals": []
+    },
+    "at": "2026-06-22T15:14:20.437Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "general",
+    "metadata": {
+      "intent": "general",
+      "selectedSkills": [
+        "software-engineering"
+      ],
+      "suppressedSkills": [],
+      "confidence": 20
+    },
+    "at": "2026-06-22T15:24:50.857Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "software-engineering",
+    "metadata": {
+      "skill": "software-engineering",
+      "intent": "general"
+    },
+    "at": "2026-06-22T15:24:50.876Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": true,
+      "confidence": 0.85,
+      "reason": "direct action instruction",
+      "signals": [
+        "action_verb"
+      ]
+    },
+    "at": "2026-06-22T15:24:50.889Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "general",
+    "metadata": {
+      "intent": "general",
+      "selectedSkills": [
+        "human-ui-design",
+        "software-engineering"
+      ],
+      "suppressedSkills": [],
+      "confidence": 38
+    },
+    "at": "2026-06-22T15:39:39.376Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "human-ui-design",
+    "metadata": {
+      "skill": "human-ui-design",
+      "intent": "general"
+    },
+    "at": "2026-06-22T15:39:39.395Z"
+  },
+  {
+    "kind": "skill_selected",
+    "name": "software-engineering",
+    "metadata": {
+      "skill": "software-engineering",
+      "intent": "general"
+    },
+    "at": "2026-06-22T15:39:39.412Z"
+  },
+  {
+    "kind": "routing_decision",
+    "name": "auto_activation",
+    "metadata": {
+      "activate": true,
+      "confidence": 0.85,
+      "reason": "direct action instruction",
+      "signals": [
+        "action_verb"
+      ]
+    },
+    "at": "2026-06-22T15:39:39.428Z"
+  },
+  {
+    "kind": "skill_final_used",
+    "name": "human-ui-design",
+    "metadata": {
+      "skill": "human-ui-design",
+      "source": "system_injection"
+    },
+    "at": "2026-06-22T15:39:39.562Z"
+  },
+  {
+    "kind": "skill_final_used",
+    "name": "software-engineering",
+    "metadata": {
+      "skill": "software-engineering",
+      "source": "system_injection"
+    },
+    "at": "2026-06-22T15:39:39.578Z"
+  },
+  {
+    "kind": "verification_used",
+    "name": "npx tsc --noEmit",
+    "metadata": {
+      "command": "npx tsc --noEmit",
+      "status": "unknown"
+    },
+    "at": "2026-06-22T15:51:21.396Z"
+  },
+  {
+    "kind": "verification_result",
+    "name": "npx tsc --noEmit",
+    "metadata": {
+      "skill": "human-ui-design",
+      "passed": false,
+      "command": "npx tsc --noEmit"
+    },
+    "at": "2026-06-22T15:51:21.408Z"
+  },
+  {
+    "kind": "verification_used",
+    "name": "npx next lint --max-warnings=0 2>&1 | Out-String",
+    "metadata": {
+      "command": "npx next lint --max-warnings=0 2>&1 | Out-String",
+      "status": "unknown"
+    },
+    "at": "2026-06-22T15:51:35.404Z"
+  },
+  {
+    "kind": "verification_result",
+    "name": "npx next lint --max-warnings=0 2>&1 | Out-String",
+    "metadata": {
+      "skill": "human-ui-design",
+      "passed": false,
+      "command": "npx next lint --max-warnings=0 2>&1 | Out-String"
+    },
+    "at": "2026-06-22T15:51:35.421Z"
+  },
+  {
+    "kind": "verification_used",
+    "name": "npm run build 2>&1 | Out-String",
+    "metadata": {
+      "command": "npm run build 2>&1 | Out-String",
+      "status": "unknown"
+    },
+    "at": "2026-06-22T15:52:19.499Z"
+  },
+  {
+    "kind": "verification_result",
+    "name": "npm run build 2>&1 | Out-String",
+    "metadata": {
+      "skill": "human-ui-design",
+      "passed": false,
+      "command": "npm run build 2>&1 | Out-String"
+    },
+    "at": "2026-06-22T15:52:19.514Z"
+  }
+]

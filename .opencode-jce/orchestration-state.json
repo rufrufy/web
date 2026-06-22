@@ -1,0 +1,55 @@
+{
+  "version": 2,
+  "updatedAt": "2026-06-22T15:59:16.112Z",
+  "memoryTiers": {
+    "session": {
+      "blockers": []
+    },
+    "project": {
+      "conventions": [],
+      "releaseFiles": [],
+      "standardVerification": [],
+      "dangerousAreas": []
+    },
+    "failure": {
+      "knownErrors": [],
+      "badFixes": [],
+      "successfulFixes": []
+    },
+    "operator": {
+      "preferTerseReports": false,
+      "preferAutonomousCompletion": false,
+      "preferBroadVerification": true
+    }
+  },
+  "facts": [],
+  "decisions": [],
+  "artifacts": [],
+  "evidence": [],
+  "wisdom": [],
+  "taskLearnings": [],
+  "sessionHistory": [
+    {
+      "id": "session-1782139763158-qjcj",
+      "startedAt": "2026-06-22T14:49:23.158Z",
+      "nodesCompleted": 0,
+      "nodesFailed": 0,
+      "endedAt": "2026-06-22T15:59:16.111Z"
+    }
+  ],
+  "orchestration": {
+    "constraints": [],
+    "signals": []
+  },
+  "autonomyLevel": "balanced",
+  "operatorPreferences": {
+    "preferAutonomousCompletion": false,
+    "askBeforeArchitectureChange": true,
+    "preferBroadVerification": true,
+    "preferTerseReports": false,
+    "defaultReleaseStrictness": "medium"
+  },
+  "agentPerformanceLog": [],
+  "calibrationLog": [],
+  "recoveryLog": []
+}
