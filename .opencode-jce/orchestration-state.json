@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updatedAt": "2026-06-22T15:59:16.112Z",
+  "updatedAt": "2026-06-22T16:22:36.957Z",
   "memoryTiers": {
     "session": {
       "blockers": []
@@ -22,7 +22,24 @@
       "preferBroadVerification": true
     }
   },
-  "facts": [],
+  "facts": [
+    {
+      "id": "fact-1782145227594-rsecbm",
+      "key": "build.typecheck",
+      "value": "tsc",
+      "source": "tool",
+      "confidence": 0.9,
+      "discoveredAt": "2026-06-22T16:20:27.594Z"
+    },
+    {
+      "id": "fact-1782145227595-k55hy8",
+      "key": "last.error.type",
+      "value": "typescript",
+      "source": "tool",
+      "confidence": 0.9,
+      "discoveredAt": "2026-06-22T16:20:27.595Z"
+    }
+  ],
   "decisions": [],
   "artifacts": [],
   "evidence": [],
@@ -34,7 +51,7 @@
       "startedAt": "2026-06-22T14:49:23.158Z",
       "nodesCompleted": 0,
       "nodesFailed": 0,
-      "endedAt": "2026-06-22T15:59:16.111Z"
+      "endedAt": "2026-06-22T16:22:36.956Z"
     }
   ],
   "orchestration": {

@@ -17,6 +17,7 @@ import {
   CheckIcon,
 } from "@/components/Icons";
 import type { NavKey } from "@/components/AppShell";
+import { CurrentLocationCard } from "@/components/CurrentLocationCard";
 
 interface HomeProps {
   onNavigate: (key: NavKey) => void;
@@ -127,6 +128,8 @@ export function Home({
           <p className="mt-1 text-sm opacity-90">{dateStr}</p>
         </div>
       </div>
+
+      <CurrentLocationCard />
 
       <button
         onClick={fetchHome}

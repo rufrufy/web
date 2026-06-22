@@ -28,5 +28,55 @@
     "area": "auto-capture",
     "id": "ev-1782143539497-3",
     "timestamp": "2026-06-22T15:52:19.497Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npx tsc --noEmit 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { Write-Host \"TSC_OK\" }",
+    "status": "unknown",
+    "summary": "npx tsc --noEmit 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { Write-Host \"TSC_OK\" } -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782144514901-4",
+    "timestamp": "2026-06-22T16:08:34.901Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npm install leaflet@1.9.4 && npm install -D @types/leaflet@1.9.12 2>&1 | Out-String",
+    "status": "unknown",
+    "summary": "npm install leaflet@1.9.4 && npm install -D @types/leaflet@1.9.12 2>&1 | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782144945278-5",
+    "timestamp": "2026-06-22T16:15:45.278Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npx tsc --noEmit 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { Write-Host \"TSC_OK\" } else { Write-Host \"TSC_FAIL\" }",
+    "status": "fail",
+    "summary": "npx tsc --noEmit 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { Write-Host \"TSC_OK\" } else { Write-Host \"TSC_FAIL\" } -> fail",
+    "area": "auto-capture",
+    "id": "ev-1782145227595-6",
+    "timestamp": "2026-06-22T16:20:27.595Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npx tsc --noEmit 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { Write-Host \"TSC_OK\" } else { Write-Host \"TSC_FAIL\" }",
+    "status": "unknown",
+    "summary": "npx tsc --noEmit 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { Write-Host \"TSC_OK\" } else { Write-Host \"TSC_FAIL\" } -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782145271841-7",
+    "timestamp": "2026-06-22T16:21:11.841Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npm run build 2>&1 | Out-String",
+    "status": "unknown",
+    "summary": "npm run build 2>&1 | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782145323047-8",
+    "timestamp": "2026-06-22T16:22:03.047Z"
   }
 ]

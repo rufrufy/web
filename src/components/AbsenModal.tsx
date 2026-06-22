@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
 import type { HomeData } from "@/types";
-import { Loading } from "@/components/Feedback";
 import {
   CameraIcon,
   QrIcon,
@@ -24,6 +23,7 @@ interface AbsenModalProps {
 type Step =
   | "select"
   | "camera"
+  | "processing"
   | "scan"
   | "submitting"
   | "success"
@@ -79,7 +79,7 @@ export function AbsenModal({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && step !== "submitting") onClose();
+      if (e.key === "Escape" && step !== "submitting" && step !== "processing") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -160,7 +160,17 @@ export function AbsenModal({
     const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
     setPhoto(dataUrl);
     stopCamera();
+    setStep("processing");
   };
+
+  useEffect(() => {
+    if (step !== "processing") return;
+    const timer = setTimeout(() => {
+      void submitFace();
+    }, 3000);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
 
   const dataUrlToFile = async (
     dataUrl: string,
@@ -201,7 +211,7 @@ export function AbsenModal({
       jam_absen: jamAbsen,
       jam_absen_hadir: jamKerja?.jam_masuk || "08:00:00",
       jam_absen_pulang: jamKerja?.jam_pulang || "16:00:00",
-      ancodebuddy_id: navigator.userAgent,
+      android_id: navigator.userAgent,
       lokasi: location ? `${location.lat},${location.lng}` : "0,0",
       kantor: matchedLokasi,
       laporan_kegiatan: "",
@@ -265,9 +275,6 @@ export function AbsenModal({
         ? "Absen Masuk"
         : "Absen Pulang";
 
-  const showPhotoReview =
-    photo && step !== "submitting" && step !== "success" && step !== "error";
-
   return (
     <div
       className="modal-backdrop animate-fade-in fixed inset-0 z-[60] flex items-end justify-center sm:items-center"
@@ -275,7 +282,7 @@ export function AbsenModal({
       aria-modal="true"
       aria-label={title}
       onMouseDown={(e) => {
-        if (e.target === e.currentTarget && step !== "submitting") onClose();
+        if (e.target === e.currentTarget && step !== "submitting" && step !== "processing") onClose();
       }}
     >
       <div
@@ -285,7 +292,7 @@ export function AbsenModal({
         <div className="safe-top flex shrink-0 items-center justify-between bg-primary px-4 py-3 text-white">
           <button
             onClick={onClose}
-            disabled={step === "submitting"}
+            disabled={step === "submitting" || step === "processing"}
             className="flex items-center gap-1.5 text-sm font-medium hover:bg-white/10 active:scale-95 disabled:opacity-50"
             aria-label="Kembali"
           >
@@ -373,6 +380,9 @@ export function AbsenModal({
                   Posisikan wajah di dalam lingkaran
                 </div>
               </div>
+              <p className="text-center text-xs text-gray-500">
+                Setelah ambil foto, gambar diproses 3 detik lalu otomatis dikirim.
+              </p>
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={() => {
@@ -391,35 +401,29 @@ export function AbsenModal({
             </div>
           )}
 
-          {showPhotoReview && (
-            <div className="space-y-3">
+          {step === "processing" && (
+            <div className="space-y-4 py-2">
               <div className="mx-auto max-w-xs overflow-hidden rounded-2xl bg-black shadow-lg">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={photo}
-                  alt="Foto absen"
-                  className="aspect-[3/4] w-full object-cover"
-                />
+                {photo && (
+                  <img
+                    src={photo}
+                    alt="Foto absen"
+                    className="aspect-[3/4] w-full object-cover"
+                  />
+                )}
               </div>
-              <LocationStatus
-                status={locationStatus}
-                matched={matchedLokasi}
-                onRetry={getLocation}
-              />
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => {
-                    setPhoto(null);
-                    setStep("select");
-                  }}
-                  className="btn-outline"
-                >
-                  Ulang
-                </button>
-                <button onClick={submitFace} className="btn-success">
-                  <CheckIcon size={18} />
-                  Kirim
-                </button>
+              <div className="flex flex-col items-center gap-2 text-center">
+                <div className="relative flex h-10 w-10 items-center justify-center">
+                  <span className="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-blue-400 opacity-40" />
+                  <span className="relative inline-flex h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+                </div>
+                <p className="text-sm font-semibold text-gray-900">
+                  Mengambil gambar…
+                </p>
+                <p className="text-xs text-gray-500">
+                  Foto sedang diproses dan otomatis dikirim ke server.
+                </p>
               </div>
             </div>
           )}
@@ -450,17 +454,40 @@ export function AbsenModal({
             </div>
           )}
 
-          {step === "submitting" && <Loading message="Mengirim absen..." />}
+          {step === "submitting" && (
+            <div className="space-y-4 py-2">
+              <div className="mx-auto max-w-xs overflow-hidden rounded-2xl bg-black shadow-lg">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                {photo && (
+                  <img
+                    src={photo}
+                    alt="Foto absen"
+                    className="aspect-[3/4] w-full object-cover"
+                  />
+                )}
+              </div>
+              <div className="flex flex-col items-center gap-2 text-center">
+                <span className="inline-flex h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+                <p className="text-sm font-semibold text-gray-900">
+                  Mengirim absen…
+                </p>
+              </div>
+            </div>
+          )}
 
           {step === "success" && (
             <div className="py-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-50 text-success">
-                <CheckIcon size={32} />
+              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-green-50 text-success">
+                <CheckIcon size={40} />
               </div>
-              <p className="font-semibold text-gray-900">Berhasil!</p>
+              <p className="text-lg font-bold text-gray-900">Absen Berhasil</p>
               <p className="mt-1 text-sm text-gray-500">{successMsg}</p>
-              <button onClick={onClose} className="btn-primary mt-4 w-full">
-                Selesai
+              <button
+                onClick={onClose}
+                className="btn-success mt-5 w-full py-3 text-base"
+              >
+                <CheckIcon size={20} />
+                Absen Berhasil
               </button>
             </div>
           )}
