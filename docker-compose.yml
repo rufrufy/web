@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  sadewa-web:
+    build: .
+    container_name: sadewa-web
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    networks:
+      - sadewa-net
+
+networks:
+  sadewa-net:
+    driver: bridge
