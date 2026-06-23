@@ -172,14 +172,8 @@ export function AbsenModal({
     setErrorMsg("");
 
     const now = new Date();
-    const timePart = now.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    // Server expects full datetime "YYYY-MM-DD HH:MM:SS" for jam_* fields (mirrors Android Shape: tanggal_masuk + " " + jam_masuk).
-    const tanggal = homeData.tanggal || now.toISOString().slice(0, 10);
-    const jamAbsen = `${tanggal} ${timePart}`;
+    const tanggal = parseTanggalServer(homeData.tanggal) || now.toISOString().slice(0, 10);
+    const jamAbsen = `${tanggal} ${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
 
     const jamKerja = homeData.jam_kerja?.find(
       (j) => j.hari_masuk === homeData.hari?.toUpperCase()
@@ -571,4 +565,49 @@ function haversine(
       Math.sin(dLng / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
+}
+
+const INDONESIAN_MONTHS: Record<string, string> = {
+  januari: "01",
+  februari: "02",
+  maret: "03",
+  april: "04",
+  mei: "05",
+  juni: "06",
+  juli: "07",
+  agustus: "08",
+  september: "09",
+  oktober: "10",
+  november: "11",
+  desember: "12",
+};
+
+function parseTanggalServer(tanggal: string | undefined): string | null {
+  if (!tanggal) return null;
+
+  // Already ISO-ish "2026-06-23" or "2026-06-23 00:00:00"
+  const iso = new Date(tanggal);
+  if (!isNaN(iso.getTime())) {
+    return iso.toISOString().slice(0, 10);
+  }
+
+  // Indonesian human-readable: "23 Juni 2026"
+  const parts = tanggal.toLowerCase().trim().split(/\s+/);
+  if (parts.length >= 3) {
+    const day = parts[0].replace(/[^0-9]/g, "").padStart(2, "0");
+    const month = INDONESIAN_MONTHS[parts[1]];
+    const year = parts[2].replace(/[^0-9]/g, "");
+    if (month && day && year.length === 4) {
+      const d = new Date(`${year}-${month}-${day}`);
+      if (!isNaN(d.getTime())) {
+        return d.toISOString().slice(0, 10);
+      }
+    }
+  }
+
+  return null;
+}
+
+function pad(n: number): string {
+  return String(n).padStart(2, "0");
 }
