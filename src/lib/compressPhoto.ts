@@ -1,13 +1,13 @@
 // Compress a canvas photo to under maxBytes by lowering JPEG quality, then dimensions.
 // Accepts the source canvas directly (no async image decode). Returns a JPEG dataURL.
-const MAX_DIMENSION = 640;
-const MIN_DIMENSION = 240;
-const MIN_QUALITY = 0.35;
-const MAX_QUALITY = 0.8;
+const MAX_DIMENSION = 1280;
+const MIN_DIMENSION = 480;
+const MIN_QUALITY = 0.6;
+const MAX_QUALITY = 0.9;
 
 export function compressCanvas(
   source: HTMLCanvasElement | HTMLVideoElement,
-  maxBytes = 100 * 1024
+  maxBytes = 500 * 1024
 ): string {
   const srcW = "videoWidth" in source ? source.videoWidth : source.width;
   const srcH = "videoHeight" in source ? source.videoHeight : source.height;

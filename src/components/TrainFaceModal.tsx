@@ -20,7 +20,15 @@ const POSES: { key: Pose; label: string; instruksi: string }[] = [
   { key: "Kiri", label: "Menoleh Kiri", instruksi: "Arahkan Wajah Menghadap Ke Kiri" },
 ];
 
-export function TrainFaceModal({ onClose }: { onClose: () => void }) {
+export function TrainFaceModal({
+  onClose,
+  title = "Daftar Wajah",
+  description = "Pendaftaran wajah diperlukan untuk absen face. Ambil 3 foto: depan, kanan, dan kiri.",
+}: {
+  onClose: () => void;
+  title?: string;
+  description?: string;
+}) {
   const { token, user } = useAuth();
   const [step, setStep] = useState<Step>("capture");
   const [currentPoseIdx, setCurrentPoseIdx] = useState(0);
@@ -139,7 +147,7 @@ export function TrainFaceModal({ onClose }: { onClose: () => void }) {
 
   return (
     <ModalShell
-      title="Daftar Wajah"
+      title={title}
       onClose={onClose}
       closeable={step !== "submitting"}
     >
@@ -147,10 +155,7 @@ export function TrainFaceModal({ onClose }: { onClose: () => void }) {
         {step === "capture" && (
           <div className="space-y-4">
             <div className="text-center">
-              <p className="text-sm text-gray-600">
-                Pendaftaran wajah diperlukan untuk absen face. Ambil 3 foto:
-                depan, kanan, dan kiri.
-              </p>
+              <p className="text-sm text-gray-600">{description}</p>
             </div>
 
             <div className="flex justify-center gap-2">

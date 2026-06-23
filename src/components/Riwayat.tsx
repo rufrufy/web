@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
 import type {
@@ -9,6 +9,54 @@ import type {
 } from "@/types";
 import { Loading, ErrorState, EmptyState } from "@/components/Feedback";
 import { CalendarIcon, ClockIcon } from "@/components/Icons";
+
+const UPSTREAM_ORIGIN = "https://secure-sadewa.semarangkota.go.id";
+
+// Backend field name for the attendance photo is not yet confirmed; try each.
+const FOTO_FIELDS = [
+  "foto",
+  "foto_depan",
+  "foto_hadir",
+  "foto_pulang",
+  "depan",
+  "photo",
+  "gambar",
+  "image",
+  "file_foto",
+  "url_foto",
+];
+
+function extractFoto(
+  r: Record<string, unknown>
+): { hadir: string | null; pulang: string | null } {
+  const hadir =
+    pickFirst(r, ["foto_hadir", "foto_depan_hadir", "depan_hadir"]) ||
+    pickFirst(r, FOTO_FIELDS);
+  const pulang =
+    pickFirst(r, ["foto_pulang", "foto_depan_pulang", "depan_pulang"]) ||
+    pickFirst(r, FOTO_FIELDS);
+  return { hadir: resolveUrl(hadir), pulang: resolveUrl(pulang) };
+}
+
+function pickFirst(
+  r: Record<string, unknown>,
+  fields: string[]
+): string | null {
+  for (const f of fields) {
+    const v = r[f];
+    if (typeof v === "string" && v.trim() !== "" && v.trim() !== "-") {
+      return v.trim();
+    }
+  }
+  return null;
+}
+
+function resolveUrl(val: string | null): string | null {
+  if (!val) return null;
+  if (/^(https?:|data:|blob:)/i.test(val)) return val;
+  if (val.startsWith("/")) return `${UPSTREAM_ORIGIN}${val}`;
+  return `${UPSTREAM_ORIGIN}/${val}`;
+}
 
 export function Riwayat() {
   const { token, user } = useAuth();
@@ -32,6 +80,7 @@ export function Riwayat() {
     setError("");
     try {
       const res = await api.riwayatAbsen(token, user.nip, tanggal);
+      console.log("[Riwayat] raw riwayat-absen response:", res);
       setRiwayat(res);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal memuat riwayat");
@@ -46,6 +95,7 @@ export function Riwayat() {
     setError("");
     try {
       const res = await api.riwayatAbsenApel(token, user.nip, tanggal);
+      console.log("[Riwayat] raw riwayat-absen-apel response:", res);
       setRiwayatApel(res);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal memuat riwayat");
@@ -145,6 +195,7 @@ function RiwayatList({
   entries: Record<string, unknown[]>;
   response: RiwayatAbsenResponse | null;
 }) {
+  const [preview, setPreview] = useState<string | null>(null);
   const keys = Object.keys(entries);
 
   if (keys.length === 0) {
@@ -172,15 +223,18 @@ function RiwayatList({
           <h3 className="mb-3 font-semibold text-gray-700">{date}</h3>
           <div className="space-y-2">
             {entries[date].map((item, i) => {
-              const r = item as Record<string, string | number>;
+              const r = item as Record<string, unknown>;
+              const { hadir, pulang } = extractFoto(r);
               return (
                 <div
                   key={i}
                   className="flex items-center gap-3 rounded-lg bg-gray-50 px-3 py-2"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50 text-primary">
-                    <ClockIcon />
-                  </div>
+                  <FotoThumb
+                    src={hadir}
+                    fallback={<ClockIcon />}
+                    onOpen={() => hadir && setPreview(hadir)}
+                  />
                   <div className="flex-1">
                     <p className="text-sm font-medium">
                       {String(r.jenis_jam_kerja || "-")} •{" "}
@@ -188,21 +242,76 @@ function RiwayatList({
                     </p>
                     <p className="text-xs text-gray-500">
                       Masuk: {formatTime(String(r.jam_absen_hadir || "-"))}
-                      {r.selisih_hadir
-                        ? ` (${r.selisih_hadir})`
-                        : ""}
+                      {r.selisih_hadir ? ` (${r.selisih_hadir})` : ""}
                     </p>
                     <p className="text-xs text-gray-500">
                       Pulang: {formatTime(String(r.jam_absen_pulang || "-"))}
                     </p>
                   </div>
+                  {pulang && pulang !== hadir && (
+                    <FotoThumb
+                      src={pulang}
+                      fallback={<ClockIcon />}
+                      onOpen={() => setPreview(pulang)}
+                    />
+                  )}
                 </div>
               );
             })}
           </div>
         </div>
       ))}
+
+      {preview && (
+        <div
+          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setPreview(null)}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={preview}
+            alt="Foto absen"
+            className="max-h-[90vh] max-w-full rounded-lg object-contain"
+          />
+        </div>
+      )}
     </div>
+  );
+}
+
+function FotoThumb({
+  src,
+  fallback,
+  onOpen,
+}: {
+  src: string | null;
+  fallback: ReactNode;
+  onOpen: () => void;
+}) {
+  if (!src) {
+    return (
+      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-primary">
+        {fallback}
+      </div>
+    );
+  }
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-blue-50 ring-2 ring-transparent transition hover:ring-primary active:scale-95"
+      aria-label="Lihat foto"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt="Foto absen"
+        className="h-full w-full object-cover"
+        onError={(e) => {
+          e.currentTarget.style.display = "none";
+        }}
+      />
+    </button>
   );
 }
 

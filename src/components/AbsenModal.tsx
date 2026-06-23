@@ -242,12 +242,21 @@ export function AbsenModal({
       const fileName = `depan_${user.nip}_${Date.now()}.jpg`;
       const file = await dataUrlToFile(photoDataUrl, fileName);
 
+      console.log("[Absen] submitFace params:", params);
+      console.log("[Absen] submitFace file:", {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      });
+
       let res: AbsenResponse;
       if (isApel) {
         res = await api.addAbsenApelFace(token, params, file);
       } else {
         res = await api.addAbsenFace(token, params, file);
       }
+      console.log("[Absen] submitFace response:", res);
+
       if (res.success) {
         if (!isApel && mode === "hadir" && res.parent_absen != null) {
           setParentAbsen(res.parent_absen);

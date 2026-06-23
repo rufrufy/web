@@ -1,8 +1,13 @@
 "use client";
 
 import { useAuth } from "@/hooks/useAuth";
+import { CameraIcon } from "@/components/Icons";
 
-export function Profil() {
+export function Profil({
+  onOpenTrainFace,
+}: {
+  onOpenTrainFace?: () => void;
+}) {
   const { user } = useAuth();
 
   if (!user) return null;
@@ -48,6 +53,13 @@ export function Profil() {
           <p className="text-xs opacity-80">{user.opd}</p>
         </div>
       </div>
+
+      {onOpenTrainFace && (
+        <button onClick={onOpenTrainFace} className="btn-outline w-full">
+          <CameraIcon size={18} />
+          Perbarui Wajah
+        </button>
+      )}
 
       <div className="card divide-y divide-gray-100">
         {fields.map((f) => (

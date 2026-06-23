@@ -78,5 +78,205 @@
     "area": "auto-capture",
     "id": "ev-1782145323047-8",
     "timestamp": "2026-06-22T16:22:03.047Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "$env:CI='true'; $env:DEBIAN_FRONTEND='noninteractive'; $env:GIT_TERMINAL_PROMPT='0'; $env:GCM_INTERACTIVE='never'; $env:HOMEBREW_NO_AUTO_UPDATE='1'; $env:GIT_EDITOR=':'; $env:EDITOR=':'; $env:VISUAL=''; $env:GIT_SEQUENCE_EDITOR=':'; $env:GIT_MERGE_AUTOEDIT='no'; $env:GIT_PAGER='cat'; $env:PAGER='cat'; $env:npm_config_yes='true'; $env:PIP_NO_INPUT='1'; $env:YARN_ENABLE_IMMUTABLE_INSTALLS='false'; git log --oneline -20",
+    "status": "unknown",
+    "summary": "$env:CI='true'; $env:DEBIAN_FRONTEND='noninteractive'; $env:GIT_TERMINAL_PROMPT='0'; $env:GCM_INTERACTIVE='never'; $env:HOMEBREW_NO_AUTO_UPDATE='1'; $env:GIT_EDITOR=':'; $env:EDITOR=':'; $env:VISUAL=''; $env:GIT_SEQUENCE_EDITOR=':'; $env:GIT_MERGE_AUTOEDIT='no'; $env:GIT_PAGER='cat'; $env:PAGER='cat'; $env:npm_config_yes='true'; $env:PIP_NO_INPUT='1'; $env:YARN_ENABLE_IMMUTABLE_INSTALLS='false'; git log --oneline -20 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782218798753-9",
+    "timestamp": "2026-06-23T12:46:38.753Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npm run build 2>&1",
+    "status": "unknown",
+    "summary": "npm run build 2>&1 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782219296487-10",
+    "timestamp": "2026-06-23T12:54:56.487Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npm run build 2>&1",
+    "status": "unknown",
+    "summary": "npm run build 2>&1 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782219596032-11",
+    "timestamp": "2026-06-23T12:59:56.032Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "if (Test-Path .dev-out.log) { Get-Content .dev-out.log -Tail 80 } else { echo \"no dev log\" }",
+    "status": "unknown",
+    "summary": "if (Test-Path .dev-out.log) { Get-Content .dev-out.log -Tail 80 } else { echo \"no dev log\" } -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782220565258-12",
+    "timestamp": "2026-06-23T13:16:05.258Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "$ErrorActionPreference='Stop'; $body = \"nip=test&absen_type=Hadir&metode_absen=Face\"; try { $r = Invoke-WebRequest -Uri \"https://secure-sadewa.semarangkota.go.id/api/absen/add-face\" -Method POST -Body $body -ContentType \"application/x-www-form-urlencoded\" -UseBasicParsing -TimeoutSec 15; Write-Output \"STATUS: $($r.StatusCode)\"; Write-Output $r.Content } catch { $resp = $_.Exception.Response; if ($resp) { $sr = New-Object System.IO.StreamReader($resp.GetResponseStream()); $body = $sr.ReadToEnd(); Write-Output \"STATUS: $([int]$resp.StatusCode)\"; Write-Output $body } else { Write-Output \"ERR: $($_.Exception.Message)\" } }",
+    "status": "fail",
+    "summary": "$ErrorActionPreference='Stop'; $body = \"nip=test&absen_type=Hadir&metode_absen=Face\"; try { $r = Invoke-WebRequest -Uri \"https://secure-sadewa.semarangkota.go.id/api/absen/add-face\" -Method POST -Body $body -ContentType \"application/x-www-form-urlencoded\" -UseBasicParsing -TimeoutSec 15; Write-Output \"STATUS: $($r.StatusCode)\"; Write-Output $r.Content } catch { $resp = $_.Exception.Response; if ($resp) { $sr = New-Object System.IO.StreamReader($resp.GetResponseStream()); $body = $sr.ReadToEnd(); Write-Output \"STATUS: $([int]$resp.StatusCode)\"; Write-Output $body } else { Write-Output \"ERR: $($_.Exception.Message)\" } } -> fail",
+    "area": "auto-capture",
+    "id": "ev-1782220659110-13",
+    "timestamp": "2026-06-23T13:17:39.110Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "node -e \"const fd = new FormData(); fd.append('a','1'); fd.append('b', new Blob(['test'], {type:'image/jpeg'}), 'test.jpg'); const req = new Request('http://example.com', {method:'POST', body: fd}); console.log('content-type:', req.headers.get('content-type'));\"",
+    "status": "unknown",
+    "summary": "node -e \"const fd = new FormData(); fd.append('a','1'); fd.append('b', new Blob(['test'], {type:'image/jpeg'}), 'test.jpg'); const req = new Request('http://example.com', {method:'POST', body: fd}); console.log('content-type:', req.headers.get('content-type'));\" -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782220674315-14",
+    "timestamp": "2026-06-23T13:17:54.315Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "npm run build 2>&1",
+    "status": "unknown",
+    "summary": "npm run build 2>&1 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782221075756-15",
+    "timestamp": "2026-06-23T13:24:35.756Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python andro_analyze.py 2>$null | Out-String",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python andro_analyze.py 2>$null | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782222867964-16",
+    "timestamp": "2026-06-23T13:54:27.964Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_submit.py 2>$null | Out-String -Stream | Select-Object -First 250",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_submit.py 2>$null | Out-String -Stream | Select-Object -First 250 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782223044738-17",
+    "timestamp": "2026-06-23T13:57:24.738Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_absenface_submit.py 2>$null | Out-String",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_absenface_submit.py 2>$null | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782223090040-18",
+    "timestamp": "2026-06-23T13:58:10.040Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_sharedpref.py 2>$null | Out-String",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_sharedpref.py 2>$null | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782224133957-19",
+    "timestamp": "2026-06-23T14:15:33.957Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_sendphoto.py 2>$null | Out-String",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_sendphoto.py 2>$null | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782224194368-20",
+    "timestamp": "2026-06-23T14:16:34.368Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_home_onresponse.py 2>$null | Out-String -Stream | Select-String -Pattern \"send_photo|foto|depan|MainResponse|SharedPref|getSend|setSend|const-string\" | Select-Object -First 60",
+    "status": "fail",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_home_onresponse.py 2>$null | Out-String -Stream | Select-String -Pattern \"send_photo|foto|depan|MainResponse|SharedPref|getSend|setSend|const-string\" | Select-Object -First 60 -> fail",
+    "area": "auto-capture",
+    "id": "ev-1782224297700-21",
+    "timestamp": "2026-06-23T14:18:17.700Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_submit_response.py 2>$null | Out-String -Stream | Select-Object -First 120",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_submit_response.py 2>$null | Out-String -Stream | Select-Object -First 120 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782224415179-22",
+    "timestamp": "2026-06-23T14:20:15.179Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_riwayat_apiclient.py 2>$null | Out-String",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_riwayat_apiclient.py 2>$null | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782224523990-23",
+    "timestamp": "2026-06-23T14:22:03.990Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_constants_face.py 2>$null | Out-String",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_constants_face.py 2>$null | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782224594050-24",
+    "timestamp": "2026-06-23T14:23:14.050Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_detail_absen.py 2>$null | Out-String",
+    "status": "pass",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python extract_detail_absen.py 2>$null | Out-String -> pass",
+    "area": "auto-capture",
+    "id": "ev-1782224648247-25",
+    "timestamp": "2026-06-23T14:24:08.247Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python -c \"\nimport logging\nlogging.getLogger('androguard').setLevel(logging.CRITICAL)\nlogging.getLogger().setLevel(logging.CRITICAL)\nfrom androguard.core.dex import DEX\n\nfor fn in ['classes.dex','classes2.dex','classes3.dex']:\n    path = r'C:\\Users\\Maruf\\Downloads\\sadewa\\\\' + fn\n    with open(path,'rb') as f:\n        dvm = DEX(f.read())\n    for cls in dvm.get_classes():\n        cname = cls.get_name()\n        if 'DetailAbsenActivity' in cname and 'get_riwayat' in cname:\n            for method in cls.get_methods():\n                mname = method.get_name()\n                code = method.get_code()\n                if not code: continue\n                bc = code.get_bc()\n                for inst in bc.get_instructions():\n                    out = str(inst.get_output())\n                    if any(kw in out.lower() for kw in ['foto','face','image','avatar','load','glide','picasso','bitmap']):\n                        print(cname + '.' + mname + ': ' + inst.get_name() + ' ' + out)\n\" 2>$null | Out-String",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Downloads\\sadewa\"; python -c \"\nimport logging\nlogging.getLogger('androguard').setLevel(logging.CRITICAL)\nlogging.getLogger().setLevel(logging.CRITICAL)\nfrom androguard.core.dex import DEX\n\nfor fn in ['classes.dex','classes2.dex','classes3.dex']:\n    path = r'C:\\Users\\Maruf\\Downloads\\sadewa\\\\' + fn\n    with open(path,'rb') as f:\n        dvm = DEX(f.read())\n    for cls in dvm.get_classes():\n        cname = cls.get_name()\n        if 'DetailAbsenActivity' in cname and 'get_riwayat' in cname:\n            for method in cls.get_methods():\n                mname = method.get_name()\n                code = method.get_code()\n                if not code: continue\n                bc = code.get_bc()\n                for inst in bc.get_instructions():\n                    out = str(inst.get_output())\n                    if any(kw in out.lower() for kw in ['foto','face','image','avatar','load','glide','picasso','bitmap']):\n                        print(cname + '.' + mname + ': ' + inst.get_name() + ' ' + out)\n\" 2>$null | Out-String -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782224669587-26",
+    "timestamp": "2026-06-23T14:24:29.587Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 30",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 30 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782225902532-27",
+    "timestamp": "2026-06-23T14:45:02.532Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 20",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 20 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782225982856-28",
+    "timestamp": "2026-06-23T14:46:22.856Z"
   }
 ]

@@ -9,3 +9,4 @@ build/
 .omc/*
 .opencode-jcert/*
 .opencode-context.md
+.opencode-jce/*

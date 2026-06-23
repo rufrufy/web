@@ -62,6 +62,9 @@ async function request<T>(
     const errMsg =
       (json as { message?: string }).message ||
       `HTTP ${res.status}`;
+    console.error(`[api] ${path} failed: ${res.status}`, {
+      responseText: text.slice(0, 500),
+    });
     if (errMsg === "Unauthenticated.") {
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("unauthenticated"));
@@ -70,7 +73,14 @@ async function request<T>(
     throw new Error(errMsg);
   }
 
-  return json as T;
+  const result = json as T;
+  if (result && typeof result === "object" && "success" in result) {
+    if (!(result as { success: boolean }).success) {
+      console.warn(`[api] ${path} returned success=false:`, text.slice(0, 500));
+    }
+  }
+
+  return result;
 }
 
 export const api = {

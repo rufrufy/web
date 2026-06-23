@@ -26,7 +26,7 @@ type ModalState =
   | { type: "notifikasi" }
   | { type: "kegiatan" }
   | { type: "scan" }
-  | { type: "trainFace" };
+  | { type: "trainFace"; source?: "home" | "profil" };
 
 export default function HomePage() {
   const router = useRouter();
@@ -72,12 +72,20 @@ export default function HomePage() {
             onOpenKegiatan={() => setModal({ type: "kegiatan" })}
             onOpenNotifikasi={() => setModal({ type: "notifikasi" })}
             onOpenScan={() => setModal({ type: "scan" })}
-            onOpenTrainFace={() => setModal({ type: "trainFace" })}
+            onOpenTrainFace={() =>
+              setModal({ type: "trainFace", source: "home" })
+            }
           />
         )}
         {nav === "riwayat" && <Riwayat />}
         {nav === "laporan" && <Laporan />}
-        {nav === "profil" && <Profil />}
+        {nav === "profil" && (
+          <Profil
+            onOpenTrainFace={() =>
+              setModal({ type: "trainFace", source: "profil" })
+            }
+          />
+        )}
       </AppShell>
 
       {modal.type === "absen" && homeData && (
@@ -130,7 +138,17 @@ export default function HomePage() {
       )}
 
       {modal.type === "trainFace" && (
-        <TrainFaceModal onClose={() => setModal({ type: "none" })} />
+        <TrainFaceModal
+          onClose={() => setModal({ type: "none" })}
+          title={
+            modal.source === "profil" ? "Perbarui Wajah" : "Daftar Wajah"
+          }
+          description={
+            modal.source === "profil"
+              ? "Perbarui data wajah Anda. Ambil 3 foto: depan, kanan, dan kiri."
+              : "Pendaftaran wajah diperlukan untuk absen face. Ambil 3 foto: depan, kanan, dan kiri."
+          }
+        />
       )}
     </>
   );
