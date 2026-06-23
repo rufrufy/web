@@ -278,5 +278,25 @@
     "area": "auto-capture",
     "id": "ev-1782225982856-28",
     "timestamp": "2026-06-23T14:46:22.856Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 20",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 20 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782226990041-29",
+    "timestamp": "2026-06-23T15:03:10.041Z"
+  },
+  {
+    "taskId": "auto-capture",
+    "type": "command",
+    "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 15",
+    "status": "unknown",
+    "summary": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 15 -> unknown",
+    "area": "auto-capture",
+    "id": "ev-1782227042702-30",
+    "timestamp": "2026-06-23T15:04:02.702Z"
   }
 ]

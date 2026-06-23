@@ -1,28 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2026-06-23T14:46:39.600Z",
+  "updatedAt": "2026-06-23T15:05:08.964Z",
   "activeTasks": [],
   "completedSummaries": [],
   "blockers": [],
   "verificationEvidence": [
-    {
-      "taskId": "auto-capture",
-      "type": "command",
-      "command": "npx tsc --noEmit",
-      "status": "unknown",
-      "summary": "npx tsc --noEmit -> unknown",
-      "area": "auto-capture",
-      "captured": "auto"
-    },
-    {
-      "taskId": "auto-capture",
-      "type": "command",
-      "command": "npx tsc --noEmit",
-      "status": "unknown",
-      "summary": "npx tsc --noEmit -> unknown",
-      "area": "auto-capture",
-      "captured": "auto"
-    },
     {
       "taskId": "auto-capture",
       "type": "command",
@@ -902,6 +884,24 @@
       "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 20",
       "status": "unknown",
       "summary": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 20 -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 20",
+      "status": "unknown",
+      "summary": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 20 -> unknown",
+      "area": "auto-capture",
+      "captured": "auto"
+    },
+    {
+      "taskId": "auto-capture",
+      "type": "command",
+      "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 15",
+      "status": "unknown",
+      "summary": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 15 -> unknown",
       "area": "auto-capture",
       "captured": "auto"
     }
@@ -1912,6 +1912,33 @@
         "compressedChars": 800,
         "estimatedTokensSaved": 6
       }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 20 -> unknown",
+      "at": "2026-06-23T15:03:10.080Z",
+      "metadata": {
+        "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx tsc --noEmit 2>&1 | Select-Object -First 20"
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 15 -> unknown",
+      "at": "2026-06-23T15:04:02.750Z",
+      "metadata": {
+        "command": "cd \"C:\\Users\\Maruf\\Nextjs\\web\"; npx next build 2>&1 | Select-Object -Last 15"
+      }
+    },
+    {
+      "type": "verification.recorded",
+      "message": "Context budget applied to bash output",
+      "at": "2026-06-23T15:04:02.756Z",
+      "metadata": {
+        "tool": "bash",
+        "originalChars": 682,
+        "compressedChars": 665,
+        "estimatedTokensSaved": 4
+      }
     }
   ],
   "changedFiles": [
@@ -1975,11 +2002,11 @@
   "taskLearnings": [],
   "failureMemories": [],
   "contextBudgetSummary": {
-    "originalChars": 210432,
-    "compressedChars": 204800,
-    "estimatedTokensSaved": 1536,
-    "estimatedSavingsPercent": 3,
-    "tasks": 256,
+    "originalChars": 44695552,
+    "compressedChars": 43581440,
+    "estimatedTokensSaved": 262144,
+    "estimatedSavingsPercent": 2,
+    "tasks": 65536,
     "byTool": {
       "webfetch": {
         "originalChars": 0,
@@ -1988,10 +2015,10 @@
         "tasks": 0
       },
       "bash": {
-        "originalChars": 210432,
-        "compressedChars": 204800,
-        "estimatedTokensSaved": 1536,
-        "tasks": 256
+        "originalChars": 44695552,
+        "compressedChars": 43581440,
+        "estimatedTokensSaved": 262144,
+        "tasks": 65536
       },
       "grep": {
         "originalChars": 0,

@@ -3,11 +3,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
+import { compressCanvas, dataUrlToFile } from "@/lib/compressPhoto";
 import { Loading } from "@/components/Feedback";
 import {
   CameraIcon,
   CheckIcon,
   AlertCircleIcon,
+  ArrowLeftIcon,
 } from "@/components/Icons";
 import { ModalShell } from "@/components/ModalShell";
 
@@ -37,29 +39,30 @@ export function TrainFaceModal({
     Kanan: null,
     Kiri: null,
   });
-  const [cameraActive, setCameraActive] = useState(false);
+  const [cameraReady, setCameraReady] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
   const currentPose = POSES[currentPoseIdx];
   const allCaptured = photos.Depan && photos.Kanan && photos.Kiri;
+  const currentPhoto = photos[currentPose.key];
 
   const startCamera = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "user" },
+        audio: false,
       });
       streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+        await videoRef.current.play().catch(() => undefined);
       }
-      setCameraActive(true);
+      setCameraReady(true);
     } catch {
-      setErrorMsg("Tidak dapat mengakses kamera");
+      setErrorMsg("Tidak dapat mengakses kamera. Periksa izin kamera browser.");
       setStep("error");
     }
   }, []);
@@ -69,39 +72,61 @@ export function TrainFaceModal({
       streamRef.current.getTracks().forEach((t) => t.stop());
       streamRef.current = null;
     }
-    setCameraActive(false);
+    setCameraReady(false);
   }, []);
+
+  useEffect(() => {
+    if (step === "capture" && !currentPhoto && !cameraReady) {
+      // Delay so <video> is mounted before getUserMedia attaches the stream.
+      const timer = setTimeout(() => {
+        void startCamera();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [step, currentPhoto, cameraReady, startCamera]);
 
   useEffect(() => {
     return () => stopCamera();
   }, [stopCamera]);
 
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    const prevPos = document.body.style.position;
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    return () => {
+      document.body.style.overflow = prev;
+      document.body.style.position = prevPos;
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && step !== "submitting") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [step, onClose]);
+
   const capturePhoto = () => {
-    if (!videoRef.current || !canvasRef.current) return;
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
-    setPhotos((prev) => ({ ...prev, [currentPose.key]: dataUrl }));
+    if (!videoRef.current) return;
+    const compressed = compressCanvas(videoRef.current);
+    if (!compressed) return;
+    setPhotos((prev) => ({ ...prev, [currentPose.key]: compressed }));
     stopCamera();
   };
 
   const retakePhoto = (poseIdx: number) => {
+    stopCamera();
     setCurrentPoseIdx(poseIdx);
     setPhotos((prev) => ({ ...prev, [POSES[poseIdx].key]: null }));
   };
 
-  const dataUrlToFile = async (
-    dataUrl: string,
-    filename: string
-  ): Promise<File> => {
-    const res = await fetch(dataUrl);
-    const blob = await res.blob();
-    return new File([blob], filename, { type: "image/jpeg" });
+  const goToNextPose = () => {
+    stopCamera();
+    if (currentPoseIdx < POSES.length - 1) {
+      setCurrentPoseIdx(currentPoseIdx + 1);
+    }
   };
 
   const submit = async () => {
@@ -193,14 +218,7 @@ export function TrainFaceModal({
               ))}
             </div>
 
-            {!photos[currentPose.key] && !cameraActive && (
-              <button onClick={startCamera} className="btn-primary w-full">
-                <CameraIcon size={18} />
-                Buka Kamera
-              </button>
-            )}
-
-            {!photos[currentPose.key] && cameraActive && (
+            {!currentPhoto && (
               <div className="space-y-3">
                 <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-2xl bg-black shadow-lg">
                   <video
@@ -210,62 +228,56 @@ export function TrainFaceModal({
                     muted
                     autoPlay
                   />
-                  <canvas ref={canvasRef} className="hidden" />
                   <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                     <div className="h-44 w-36 rounded-[50%] border-4 border-white/70 shadow-[0_0_0_2000px_rgba(0,0,0,0.25)]" />
                   </div>
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1 text-xs text-white">
+                  <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1 text-xs text-white">
                     {currentPose.instruksi}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => {
-                      stopCamera();
-                    }}
-                    className="btn-outline"
-                  >
-                    Batal
-                  </button>
-                  <button onClick={capturePhoto} className="btn-primary">
-                    Ambil Foto
-                  </button>
-                </div>
+
+                <button onClick={capturePhoto} className="btn-primary w-full">
+                  <CameraIcon size={18} />
+                  Ambil Foto {currentPose.label}
+                </button>
               </div>
             )}
 
-            {photos[currentPose.key] && !allCaptured && (
+            {currentPhoto && (
               <div className="space-y-3">
-                <div className="mx-auto max-w-xs overflow-hidden rounded-2xl shadow-lg">
+                <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-2xl bg-black shadow-lg">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={photos[currentPose.key] as string}
-                    alt={currentPose.key}
-                    className="aspect-[3/4] w-full object-cover"
+                    src={currentPhoto}
+                    alt={currentPose.label}
+                    className="h-full w-full object-cover"
                   />
                 </div>
-                {currentPoseIdx < POSES.length - 1 ? (
+                <div className="grid grid-cols-2 gap-3">
                   <button
-                    onClick={() => {
-                      setCurrentPoseIdx(currentPoseIdx + 1);
-                    }}
-                    className="btn-primary w-full"
+                    onClick={() => retakePhoto(currentPoseIdx)}
+                    className="btn-outline"
                   >
-                    Lanjut: {POSES[currentPoseIdx + 1].label}
+                    <ArrowLeftIcon size={18} />
+                    Ulang
                   </button>
-                ) : null}
+                  {currentPoseIdx < POSES.length - 1 ? (
+                    <button onClick={goToNextPose} className="btn-primary">
+                      Pose Berikutnya
+                    </button>
+                  ) : (
+                    <button onClick={submit} className="btn-success">
+                      <CheckIcon size={18} />
+                      Kirim
+                    </button>
+                  )}
+                </div>
               </div>
             )}
 
-            {allCaptured && (
-              <div className="space-y-3">
-                <div className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">
-                  Semua foto sudah diambil. Klik kirim untuk mendaftar.
-                </div>
-                <button onClick={submit} className="btn-success w-full">
-                  <CheckIcon size={18} />
-                  Kirim Pendaftaran
-                </button>
+            {allCaptured && currentPoseIdx === POSES.length - 1 && currentPhoto && (
+              <div className="rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700">
+                Semua foto sudah diambil. Klik kirim untuk mendaftar.
               </div>
             )}
           </div>
@@ -301,7 +313,10 @@ export function TrainFaceModal({
             <p className="font-semibold text-gray-900">Gagal</p>
             <p className="mt-1 text-sm text-gray-500">{errorMsg}</p>
             <button
-              onClick={() => setStep("capture")}
+              onClick={() => {
+                setStep("capture");
+                setErrorMsg("");
+              }}
               className="btn-outline mt-4 w-full"
             >
               Kembali
