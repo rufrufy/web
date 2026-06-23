@@ -226,6 +226,19 @@ export const api = {
       multipart: buildMultipart(params),
     }),
 
+  addAbsenApelFace: (
+    token: string,
+    params: Record<string, string>,
+    fileDepan: File
+  ) => {
+    const fd = buildMultipart(params);
+    fd.append("depan", fileDepan, fileDepan.name);
+    return request<AbsenResponse>("api/absen/add-apel-face", {
+      token,
+      multipart: fd,
+    });
+  },
+
   addAbsenScan: (
     token: string,
     requestorNip: string,

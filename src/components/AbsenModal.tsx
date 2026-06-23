@@ -3,7 +3,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
-import type { HomeData } from "@/types";
+import { getParentAbsen, setParentAbsen } from "@/lib/parentAbsen";
+import { compressCanvas, dataUrlToFile } from "@/lib/compressPhoto";
+import type { AbsenResponse, HomeData } from "@/types";
 import {
   CameraIcon,
   QrIcon,
@@ -23,7 +25,6 @@ interface AbsenModalProps {
 type Step =
   | "select"
   | "camera"
-  | "processing"
   | "scan"
   | "submitting"
   | "success"
@@ -38,14 +39,13 @@ export function AbsenModal({
   const { token, user } = useAuth();
   const [step, setStep] = useState<Step>("select");
   const [method, setMethod] = useState<"face" | "qr">("face");
-  const [jenisAbsen, setJenisAbsen] = useState("WFO");
+  const [jenisAbsen, setJenisAbsen] = useState(jenis === "apel" ? "Apel" : "WFO");
   const [photo, setPhoto] = useState<string | null>(null);
   const [qrInput, setQrInput] = useState("");
   const [submittingScan, setSubmittingScan] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [location, setLocation] = useState<{
     lat: number;
@@ -58,6 +58,10 @@ export function AbsenModal({
 
   const metodeFace = homeData?.metode_absen?.includes("Face") ?? false;
   const metodeQr = homeData?.show_scanner ?? false;
+
+  useEffect(() => {
+    setJenisAbsen(jenis === "apel" ? "Apel" : "WFO");
+  }, [jenis]);
 
   useEffect(() => {
     if (!metodeFace && metodeQr) {
@@ -79,7 +83,7 @@ export function AbsenModal({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && step !== "submitting" && step !== "processing") onClose();
+      if (e.key === "Escape" && step !== "submitting") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -106,19 +110,23 @@ export function AbsenModal({
   }, [getLocation]);
 
   useEffect(() => {
-    if (location && homeData?.lokasi_absen) {
-      const matched = homeData.lokasi_absen.find((lok) => {
-        const dist = haversine(
-          location.lat,
-          location.lng,
-          parseFloat(lok.lat),
-          parseFloat(lok.lng)
-        );
-        return dist <= parseFloat(lok.radius || homeData.radius_absen || "200");
-      });
-      setMatchedLokasi(matched?.keterangan || "Luar Kantor");
-    }
-  }, [location, homeData]);
+    if (!location || !homeData) return;
+    // Apel matches against lokasi_apel[]; regular absen against lokasi_absen[].
+    const pool =
+      jenis === "apel"
+        ? homeData.lokasi_apel ?? homeData.lokasi_absen ?? []
+        : homeData.lokasi_absen ?? [];
+    const matched = pool.find((lok) => {
+      const dist = haversine(
+        location.lat,
+        location.lng,
+        parseFloat(lok.lat),
+        parseFloat(lok.lng)
+      );
+      return dist <= parseFloat(lok.radius || homeData.radius_absen || "200");
+    });
+    setMatchedLokasi(matched?.keterangan || "Luar Kantor");
+  }, [location, homeData, jenis]);
 
   const startCamera = useCallback(async () => {
     try {
@@ -149,82 +157,107 @@ export function AbsenModal({
   }, [stopCamera]);
 
   const capturePhoto = () => {
-    if (!videoRef.current || !canvasRef.current) return;
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    canvas.width = video.videoWidth || 720;
-    canvas.height = video.videoHeight || 960;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
-    setPhoto(dataUrl);
+    if (!videoRef.current) return;
+    const compressed = compressCanvas(videoRef.current);
+    if (!compressed) return;
+    setPhoto(compressed);
     stopCamera();
-    setStep("processing");
+    setStep("submitting");
+    void submitFace(compressed);
   };
 
-  useEffect(() => {
-    if (step !== "processing") return;
-    const timer = setTimeout(() => {
-      void submitFace();
-    }, 3000);
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [step]);
-
-  const dataUrlToFile = async (
-    dataUrl: string,
-    filename: string
-  ): Promise<File> => {
-    const res = await fetch(dataUrl);
-    const blob = await res.blob();
-    return new File([blob], filename, { type: "image/jpeg" });
-  };
-
-  const submitFace = async () => {
-    if (!token || !user || !homeData || !photo) return;
+  const submitFace = async (photoDataUrl: string) => {
+    if (!token || !user || !homeData) return;
     setStep("submitting");
     setErrorMsg("");
 
     const now = new Date();
-    const jamAbsen = now.toLocaleTimeString("id-ID", {
+    const timePart = now.toLocaleTimeString("id-ID", {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
     });
+    // Server expects full datetime "YYYY-MM-DD HH:MM:SS" for jam_* fields (mirrors Android Shape: tanggal_masuk + " " + jam_masuk).
+    const tanggal = homeData.tanggal || now.toISOString().slice(0, 10);
+    const jamAbsen = `${tanggal} ${timePart}`;
 
     const jamKerja = homeData.jam_kerja?.find(
       (j) => j.hari_masuk === homeData.hari?.toUpperCase()
     );
 
+    // Apel uses jam_apel[] (matched by hari_mulai + jenis), not jam_kerja[].
+    // JamApel: { id, jenis, lokasi, hari_mulai, jam_mulai, tanggal_mulai }
+    const jamApel =
+      jenis === "apel"
+        ? homeData.jam_apel?.find(
+            (a) =>
+              a.hari_mulai?.toUpperCase() === homeData.hari?.toUpperCase() &&
+              (a.jenis?.toUpperCase() === mode.toUpperCase() ||
+                a.jenis?.toUpperCase() === "APEL")
+          )
+        : undefined;
+
+    const idJamKerja = jamApel?.id ?? jamKerja?.id ?? "1";
+    // jam_absen_hadir: apel = tanggal_mulai + " " + jam_mulai; regular = tanggal_masuk + " " + jam_masuk.
+    const jamAbsenHadir =
+      jamApel?.tanggal_mulai && jamApel?.jam_mulai
+        ? `${jamApel.tanggal_mulai} ${jamApel.jam_mulai}`
+        : jamKerja?.tanggal_masuk && jamKerja?.jam_masuk
+          ? `${jamKerja.tanggal_masuk} ${jamKerja.jam_masuk}`
+          : jamKerja?.jam_masuk || "08:00:00";
+    const jamAbsenPulang =
+      jamKerja?.tanggal_pulang && jamKerja?.jam_pulang
+        ? `${jamKerja.tanggal_pulang} ${jamKerja.jam_pulang}`
+        : jamKerja?.jam_pulang || "16:00:00";
+
+    const isApel = jenis === "apel";
+    // parent_id_absen: round-trip token for regular absen (Hadir sends "", server returns parent_absen, Pulang sends it back). Apel uses id_apel instead.
+    const parentIdAbsen = isApel
+      ? undefined
+      : mode === "pulang"
+        ? getParentAbsen()
+        : "";
+
     const params: Record<string, string> = {
       nip: user.nip,
       nama: user.nama,
       opd: user.opd,
-      absen_type: mode,
-      jenis_jam_kerja: jamKerja?.alias || "TERPUSAT.",
-      alias_jam_kerja: jamKerja?.alias || "TERPUSAT.",
+      absen_type: mode === "pulang" ? "Pulang" : "Hadir",
+      jenis_jam_kerja: "ABSENSI",
+      alias_jam_kerja: "TERPUSAT.",
       jenis_absen: jenisAbsen,
       metode_absen: "Face",
-      parent_id_absen: "0",
-      id_jam_kerja: String(jamKerja?.id || "1"),
+      id_jam_kerja: String(idJamKerja),
       jam_absen: jamAbsen,
-      jam_absen_hadir: jamKerja?.jam_masuk || "08:00:00",
-      jam_absen_pulang: jamKerja?.jam_pulang || "16:00:00",
+      jam_absen_hadir: jamAbsenHadir,
+      jam_absen_pulang: jamAbsenPulang,
       android_id: navigator.userAgent,
       lokasi: location ? `${location.lat},${location.lng}` : "0,0",
       kantor: matchedLokasi,
       laporan_kegiatan: "",
       app_version: "11",
     };
+    if (parentIdAbsen !== undefined) {
+      params.parent_id_absen = parentIdAbsen;
+    }
+    if (isApel && jamApel?.id != null) {
+      params.id_apel = String(jamApel.id);
+    }
 
     try {
-      const file = await dataUrlToFile(photo, "face_depan.jpg");
-      const res =
-        jenis === "apel"
-          ? await api.addAbsenApelFaceWo(token, params)
-          : await api.addAbsenFace(token, params, file);
+      const fileName = `depan_${user.nip}_${Date.now()}.jpg`;
+      const file = await dataUrlToFile(photoDataUrl, fileName);
+
+      let res: AbsenResponse;
+      if (isApel) {
+        res = await api.addAbsenApelFace(token, params, file);
+      } else {
+        res = await api.addAbsenFace(token, params, file);
+      }
       if (res.success) {
+        if (!isApel && mode === "hadir" && res.parent_absen != null) {
+          setParentAbsen(res.parent_absen);
+        }
         setSuccessMsg(res.message || "Absen berhasil");
         setStep("success");
       } else {
@@ -282,7 +315,7 @@ export function AbsenModal({
       aria-modal="true"
       aria-label={title}
       onMouseDown={(e) => {
-        if (e.target === e.currentTarget && step !== "submitting" && step !== "processing") onClose();
+        if (e.target === e.currentTarget && step !== "submitting") onClose();
       }}
     >
       <div
@@ -292,7 +325,7 @@ export function AbsenModal({
         <div className="safe-top flex shrink-0 items-center justify-between bg-primary px-4 py-3 text-white">
           <button
             onClick={onClose}
-            disabled={step === "submitting" || step === "processing"}
+            disabled={step === "submitting"}
             className="flex items-center gap-1.5 text-sm font-medium hover:bg-white/10 active:scale-95 disabled:opacity-50"
             aria-label="Kembali"
           >
@@ -372,7 +405,6 @@ export function AbsenModal({
                   muted
                   autoPlay
                 />
-                <canvas ref={canvasRef} className="hidden" />
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                   <div className="h-44 w-36 rounded-[50%] border-4 border-white/70 shadow-[0_0_0_2000px_rgba(0,0,0,0.25)]" />
                 </div>
@@ -397,33 +429,6 @@ export function AbsenModal({
                   <CameraIcon size={18} />
                   Ambil Foto
                 </button>
-              </div>
-            </div>
-          )}
-
-          {step === "processing" && (
-            <div className="space-y-4 py-2">
-              <div className="mx-auto max-w-xs overflow-hidden rounded-2xl bg-black shadow-lg">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                {photo && (
-                  <img
-                    src={photo}
-                    alt="Foto absen"
-                    className="aspect-[3/4] w-full object-cover"
-                  />
-                )}
-              </div>
-              <div className="flex flex-col items-center gap-2 text-center">
-                <div className="relative flex h-10 w-10 items-center justify-center">
-                  <span className="absolute inline-flex h-10 w-10 animate-ping rounded-full bg-blue-400 opacity-40" />
-                  <span className="relative inline-flex h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
-                </div>
-                <p className="text-sm font-semibold text-gray-900">
-                  Mengambil gambar…
-                </p>
-                <p className="text-xs text-gray-500">
-                  Foto sedang diproses dan otomatis dikirim ke server.
-                </p>
               </div>
             </div>
           )}

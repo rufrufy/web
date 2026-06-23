@@ -48,6 +48,8 @@ export interface JamKerja {
   kode_opd: string | null;
   shift: string;
   alias: string;
+  tanggal_masuk?: string;
+  tanggal_pulang?: string;
   channel?: string;
 }
 
@@ -87,6 +89,7 @@ export interface HomeData {
   qr_key: string;
   radius_absen: string;
   send_photo: string;
+  send_apel_photo: string;
   show_scanner: boolean;
   tanggal: string;
   token: string;
@@ -185,5 +188,10 @@ export interface KegiatanListResponse {
 export interface AbsenResponse {
   success: boolean;
   message: string;
+  parent_absen?: string;
+  id_jam_kerja?: string;
+  id_jam_apel?: string;
+  jam_absen?: string;
+  tanggal_absen?: string;
   data?: unknown;
 }
