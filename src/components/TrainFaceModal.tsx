@@ -111,7 +111,11 @@ export function TrainFaceModal({
   const capturePhoto = () => {
     if (!videoRef.current) return;
     const compressed = compressCanvas(videoRef.current);
-    if (!compressed) return;
+    if (!compressed) {
+      setErrorMsg("Gagal memproses foto. Coba lagi.");
+      setStep("error");
+      return;
+    }
     setPhotos((prev) => ({ ...prev, [currentPose.key]: compressed }));
     stopCamera();
   };

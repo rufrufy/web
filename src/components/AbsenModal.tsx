@@ -159,7 +159,11 @@ export function AbsenModal({
   const capturePhoto = () => {
     if (!videoRef.current) return;
     const compressed = compressCanvas(videoRef.current);
-    if (!compressed) return;
+    if (!compressed) {
+      setErrorMsg("Gagal memproses foto. Coba lagi.");
+      setStep("error");
+      return;
+    }
     setPhoto(compressed);
     stopCamera();
     setStep("submitting");
@@ -239,10 +243,15 @@ export function AbsenModal({
     }
 
     try {
+      if (!photoDataUrl) {
+        setErrorMsg("Foto tidak tersedia. Coba ambil foto ulang.");
+        setStep("error");
+        return;
+      }
+
       const fileName = `depan_${user.nip}_${Date.now()}.jpg`;
       const file = await dataUrlToFile(photoDataUrl, fileName);
 
-      console.log("[Absen] submitFace params:", params);
       console.log("[Absen] submitFace file:", {
         name: file.name,
         size: file.size,
