@@ -1,14 +1,14 @@
 // Crop + compress a camera frame for SADEWA face attendance.
-// secure-sadewa expects ≤100KB JPEG at exactly 300×400px. Larger photos
-// (1280px/500KB) are silently rejected by the server.
+// secure-sadewa expects ≤50KB JPEG at exactly 300×400px. Larger photos
+// are silently rejected by the server (file not saved to DB).
 // Performs a center-crop biased toward the upper-center (face region in
 // selfie frames). Returns JPEG dataURL or "" on failure.
 
 export const FACE_WIDTH = 300;
 export const FACE_HEIGHT = 400;
-const TARGET_BYTES = 100 * 1024;
-const MIN_QUALITY = 0.45;
-const MAX_QUALITY = 0.8;
+const TARGET_BYTES = 50 * 1024;
+const MIN_QUALITY = 0.35;
+const MAX_QUALITY = 0.7;
 
 export interface CropOptions {
   width?: number;

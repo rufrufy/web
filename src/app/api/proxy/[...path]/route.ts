@@ -24,21 +24,18 @@ export async function POST(
   const contentType = req.headers.get("content-type") || "";
 
   let body: BodyInit | undefined;
-  let bodyContentType: string | undefined;
 
   if (contentType.includes("multipart/form-data")) {
-    const rawBytes = await req.arrayBuffer();
-    body = rawBytes;
-    bodyContentType = contentType;
+    // Forward as FormData so fetch() generates a fresh, correct Content-Type
+    // with a matching boundary. Passing raw arrayBuffer + the browser's
+    // Content-Type header corrupts the multipart body upstream.
+    const formData = await req.formData();
+    body = formData;
   } else if (contentType.includes("application/x-www-form-urlencoded")) {
     body = await req.text();
-    bodyContentType = "application/x-www-form-urlencoded";
+    headers["Content-Type"] = "application/x-www-form-urlencoded";
   } else {
     body = await req.text();
-  }
-
-  if (bodyContentType) {
-    headers["Content-Type"] = bodyContentType;
   }
 
   try {
@@ -47,19 +44,18 @@ export async function POST(
       headers,
       body,
       cache: "no-store",
-      duplex: "half",
-    } as RequestInit);
+    });
 
     const text = await upstream.text();
 
     if (process.env.NODE_ENV !== "production") {
       console.log(`[proxy] ${path} → ${upstream.status}`, {
-        contentType: bodyContentType || "none",
-        bodySize: typeof body === "string" ? body.length : body instanceof ArrayBuffer ? body.byteLength : "n/a",
+        contentType,
         upstreamStatus: upstream.status,
         responsePreview: text.slice(0, 300),
       });
     }
+
     const respHeaders: Record<string, string> = {
       "Content-Type": upstream.headers.get("content-type") || "application/json",
     };
