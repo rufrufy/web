@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
 import { getParentAbsen, setParentAbsen } from "@/lib/parentAbsen";
-import { compressCanvas, dataUrlToFile } from "@/lib/compressPhoto";
+import { dataUrlToFile } from "@/lib/compressPhoto";
 import type { AbsenResponse, HomeData } from "@/types";
 import {
   CameraIcon,
@@ -46,6 +46,7 @@ export function AbsenModal({
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const [location, setLocation] = useState<{
     lat: number;
@@ -157,17 +158,53 @@ export function AbsenModal({
   }, [stopCamera]);
 
   const capturePhoto = () => {
-    if (!videoRef.current) return;
-    const compressed = compressCanvas(videoRef.current);
-    if (!compressed) {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+
+    const vw = video.videoWidth || 640;
+    const vh = video.videoHeight || 480;
+
+    // Crop 300×400 from center of video frame (face-biased upward).
+    canvas.width = 300;
+    canvas.height = 400;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
       setErrorMsg("Gagal memproses foto. Coba lagi.");
       setStep("error");
       return;
     }
-    setPhoto(compressed);
+
+    // Cover-crop: scale source to cover 300×400, then crop excess.
+    const targetRatio = 300 / 400;
+    const srcRatio = vw / vh;
+    let cropW: number;
+    let cropH: number;
+    if (srcRatio > targetRatio) {
+      cropH = vh;
+      cropW = Math.round(vh * targetRatio);
+    } else {
+      cropW = vw;
+      cropH = Math.round(vw / targetRatio);
+    }
+    const cropX = Math.round((vw - cropW) / 2);
+    const cropY = Math.max(
+      0,
+      Math.min(Math.round((vh - cropH) * 0.35), vh - cropH)
+    );
+
+    ctx.drawImage(video, cropX, cropY, cropW, cropH, 0, 0, 300, 400);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+    if (!dataUrl) {
+      setErrorMsg("Gagal memproses foto. Coba lagi.");
+      setStep("error");
+      return;
+    }
+
+    setPhoto(dataUrl);
     stopCamera();
     setStep("submitting");
-    void submitFace(compressed);
+    void submitFace(dataUrl);
   };
 
   const submitFace = async (photoDataUrl: string) => {
@@ -249,8 +286,7 @@ export function AbsenModal({
         return;
       }
 
-      const fileName = `depan_${user.nip}_${Date.now()}.jpg`;
-      const file = await dataUrlToFile(photoDataUrl, fileName);
+      const file = await dataUrlToFile(photoDataUrl, "face_depan.jpg");
 
       console.log("[Absen] submitFace file:", {
         name: file.name,
@@ -424,6 +460,7 @@ export function AbsenModal({
                   Posisikan wajah di dalam lingkaran
                 </div>
               </div>
+              <canvas ref={canvasRef} className="hidden" />
               <p className="text-center text-xs text-gray-500">
                 Setelah ambil foto, gambar diproses 3 detik lalu otomatis dikirim.
               </p>

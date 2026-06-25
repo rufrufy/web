@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { api } from "@/lib/api";
-import { compressCanvas, dataUrlToFile } from "@/lib/compressPhoto";
+import { dataUrlToFile } from "@/lib/compressPhoto";
 import { Loading } from "@/components/Feedback";
 import {
   CameraIcon,
@@ -43,6 +43,7 @@ export function TrainFaceModal({
   const [errorMsg, setErrorMsg] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
   const currentPose = POSES[currentPoseIdx];
@@ -109,14 +110,48 @@ export function TrainFaceModal({
   }, [step, onClose]);
 
   const capturePhoto = () => {
-    if (!videoRef.current) return;
-    const compressed = compressCanvas(videoRef.current);
-    if (!compressed) {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
+
+    const vw = video.videoWidth || 640;
+    const vh = video.videoHeight || 480;
+
+    canvas.width = 300;
+    canvas.height = 400;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
       setErrorMsg("Gagal memproses foto. Coba lagi.");
       setStep("error");
       return;
     }
-    setPhotos((prev) => ({ ...prev, [currentPose.key]: compressed }));
+
+    const targetRatio = 300 / 400;
+    const srcRatio = vw / vh;
+    let cropW: number;
+    let cropH: number;
+    if (srcRatio > targetRatio) {
+      cropH = vh;
+      cropW = Math.round(vh * targetRatio);
+    } else {
+      cropW = vw;
+      cropH = Math.round(vw / targetRatio);
+    }
+    const cropX = Math.round((vw - cropW) / 2);
+    const cropY = Math.max(
+      0,
+      Math.min(Math.round((vh - cropH) * 0.35), vh - cropH)
+    );
+
+    ctx.drawImage(video, cropX, cropY, cropW, cropH, 0, 0, 300, 400);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+    if (!dataUrl) {
+      setErrorMsg("Gagal memproses foto. Coba lagi.");
+      setStep("error");
+      return;
+    }
+
+    setPhotos((prev) => ({ ...prev, [currentPose.key]: dataUrl }));
     stopCamera();
   };
 
@@ -239,6 +274,7 @@ export function TrainFaceModal({
                     {currentPose.instruksi}
                   </div>
                 </div>
+                <canvas ref={canvasRef} className="hidden" />
 
                 <button onClick={capturePhoto} className="btn-primary w-full">
                   <CameraIcon size={18} />

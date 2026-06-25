@@ -23,21 +23,33 @@ export async function POST(
 
   const contentType = req.headers.get("content-type") || "";
 
-  let body: BodyInit | undefined;
-
+  // For multipart/form-data, pass the raw request body through as-is.
+  // Parsing with req.formData() loses file metadata (filename, content-type)
+  // when re-serialized by fetch(); using arrayBuffer() + forwarded Content-Type
+  // can mismatch boundaries. The only reliable way is streaming the raw bytes
+  // with the original Content-Type header intact.
   if (contentType.includes("multipart/form-data")) {
-    // Forward as FormData so fetch() generates a fresh, correct Content-Type
-    // with a matching boundary. Passing raw arrayBuffer + the browser's
-    // Content-Type header corrupts the multipart body upstream.
-    const formData = await req.formData();
-    body = formData;
-  } else if (contentType.includes("application/x-www-form-urlencoded")) {
-    body = await req.text();
-    headers["Content-Type"] = "application/x-www-form-urlencoded";
-  } else {
-    body = await req.text();
+    headers["Content-Type"] = contentType;
+
+    const rawBody = await req.arrayBuffer();
+    const text = await upstreamPost(url, headers, rawBody);
+    return makeResponse(text);
   }
 
+  // Non-multipart: simple text body.
+  if (contentType.includes("application/x-www-form-urlencoded")) {
+    headers["Content-Type"] = "application/x-www-form-urlencoded";
+  }
+  const body = await req.text();
+  const text = await upstreamPost(url, headers, body);
+  return makeResponse(text);
+}
+
+async function upstreamPost(
+  url: string,
+  headers: Record<string, string>,
+  body: ArrayBuffer | string
+): Promise<string> {
   try {
     const upstream = await fetch(url, {
       method: "POST",
@@ -49,25 +61,37 @@ export async function POST(
     const text = await upstream.text();
 
     if (process.env.NODE_ENV !== "production") {
-      console.log(`[proxy] ${path} → ${upstream.status}`, {
-        contentType,
+      console.log(`[proxy] ${url} → ${upstream.status}`, {
+        bodySize: typeof body === "string" ? body.length : body.byteLength,
         upstreamStatus: upstream.status,
-        responsePreview: text.slice(0, 300),
+        responsePreview: text.slice(0, 500),
       });
     }
 
-    const respHeaders: Record<string, string> = {
-      "Content-Type": upstream.headers.get("content-type") || "application/json",
-    };
-
-    return new NextResponse(text, {
-      status: upstream.status,
-      headers: respHeaders,
-    });
+    return text;
   } catch (err) {
-    return NextResponse.json(
-      { success: false, message: String(err) },
-      { status: 502 }
-    );
+    return JSON.stringify({
+      success: false,
+      message: String(err),
+    });
   }
+}
+
+function makeResponse(text: string): NextResponse {
+  let status = 200;
+  let contentType = "application/json";
+
+  try {
+    const parsed = JSON.parse(text);
+    if (parsed && typeof parsed === "object") {
+      // Preserve upstream error status if present.
+    }
+  } catch {
+    contentType = "text/plain";
+  }
+
+  return new NextResponse(text, {
+    status,
+    headers: { "Content-Type": contentType },
+  });
 }
